@@ -11,6 +11,41 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
+
+$md-mcgpalette0: (
+  50 : #e6f2f9,
+  100 : #c2dff2,
+  200 : #9fccea,
+  300 : #80b7e1,
+  400 : #6ba8db,
+  500 : #5b9bd5,
+  600 : #528cc8,
+  700 : #487bb6,
+  800 : #406aa4,
+  900 : #334e83,
+  A100 : #feffff,
+  A200 : #cbe1ff,
+  A400 : #98c4ff,
+  A700 : #7fb6ff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+
 $ic-requests-primary: mat.define-palette(mat.$indigo-palette);
 $ic-requests-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
