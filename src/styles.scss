@@ -1,73 +1,49 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
-// Plus imports for other components in your app.
+@use 'app/@theme/palette-generator' as mat-palette-gen;
+@import "@fontsource/nunito/latin";
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat.core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-
-$md-mcgpalette0: (
-  50 : #e6f2f9,
-  100 : #c2dff2,
-  200 : #9fccea,
-  300 : #80b7e1,
-  400 : #6ba8db,
-  500 : #5b9bd5,
-  600 : #528cc8,
-  700 : #487bb6,
-  800 : #406aa4,
-  900 : #334e83,
-  A100 : #feffff,
-  A200 : #cbe1ff,
-  A400 : #98c4ff,
-  A700 : #7fb6ff,
-  contrast: (
-    50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #000000,
-    400 : #000000,
-    500 : #000000,
-    600 : #000000,
-    700 : #ffffff,
-    800 : #ffffff,
-    900 : #ffffff,
-    A100 : #000000,
-    A200 : #000000,
-    A400 : #000000,
-    A700 : #000000,
-  )
-);
-
-
-$ic-requests-primary: mat.define-palette(mat.$indigo-palette);
-$ic-requests-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-$ic-requests-warn: mat.define-palette(mat.$red-palette);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$ic-requests-theme: mat.define-light-theme((
-  color: (
-    primary: $ic-requests-primary,
-    accent: $ic-requests-accent,
-    warn: $ic-requests-warn,
-  )
+@include mat.strong-focus-indicators((
+  border-style: solid,
+  border-width: 2px,
+  border-radius: 6px,
 ));
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($ic-requests-theme);
+$primary:  mat-palette-gen.createPalette(#5b9bd5);
+$accent: mat-palette-gen.createPalette(#d5965b);
+$warn: mat-palette-gen.createPalette(#ff544f);
+
+$light-theme: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette($primary, 600, 300, 700),
+    accent: mat.define-palette($accent, 500, 300, 700),
+    warn: mat.define-palette($warn),
+  ),
+  typography: mat.define-typography-config(
+    $font-family: 'Nunito'
+  ),
+  density: 0,
+));
+
+$dark-theme: mat.define-dark-theme((
+  color: (
+    primary: mat.define-palette($primary, 200, 700, 50),
+    accent: mat.define-palette($accent, 200, 700, 50),
+    warn: mat.define-palette($warn),
+  ),
+));
+
+@include mat.core-theme($light-theme);
+@include mat.button-theme($light-theme);
+@include mat.strong-focus-indicators-theme($light-theme);
+
+@media (prefers-color-scheme: dark) {
+  @include mat.core-color($dark-theme);
+  @include mat.button-color($dark-theme);
+  @include mat.strong-focus-indicators-color($dark-theme);
+}
 
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Nunito, "Helvetica Neue", sans-serif; }
