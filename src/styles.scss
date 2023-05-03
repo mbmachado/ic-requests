@@ -1,49 +1,9 @@
-@use '@angular/material' as mat;
-@use 'app/@theme/palette-generator' as mat-palette-gen;
-@import "@fontsource/nunito/latin";
-
-@include mat.core();
-@include mat.strong-focus-indicators((
-  border-style: solid,
-  border-width: 2px,
-  border-radius: 6px,
-));
-
-$primary: mat-palette-gen.createPalette(#5b9bd5);
-$accent: mat-palette-gen.createPalette(#d5965b);
-$warn: mat-palette-gen.createPalette(#ff544f);
-
-$light-theme: mat.define-light-theme((
-  color: (
-    primary: mat.define-palette($primary, 600, 300, 700),
-    accent: mat.define-palette($accent, 500, 300, 700),
-    warn: mat.define-palette($warn),
-  ),
-  typography: mat.define-typography-config(
-    $font-family: 'Nunito'
-  ),
-  density: 0,
-));
-
-$dark-theme: mat.define-dark-theme((
-  color: (
-    primary: mat.define-palette($primary, 200, 700, 50),
-    accent: mat.define-palette($accent, 200, 700, 50),
-    warn: mat.define-palette($warn),
-  ),
-));
-
-@include mat.core-theme($light-theme);
-@include mat.button-theme($light-theme);
-@include mat.strong-focus-indicators-theme($light-theme);
-
-@media (prefers-color-scheme: dark) {
-  @include mat.core-color($dark-theme);
-  @include mat.button-color($dark-theme);
-  @include mat.strong-focus-indicators-color($dark-theme);
-}
-
 /* You can add global styles to this file, and also import other style files */
 
+@use 'app/@theme/taiga-ui';
+@use 'app/@theme/material';
+
+@import "@fontsource/nunito/latin";
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Nunito, "Helvetica Neue", sans-serif; }
+

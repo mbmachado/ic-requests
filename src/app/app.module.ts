@@ -1,3 +1,4 @@
+import { TuiRootModule, TuiAlertModule } from "@taiga-ui/core";
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -26,8 +27,10 @@ import { MatButtonModule } from '@angular/material/button';
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    TuiRootModule,
+    TuiAlertModule,
     MatButtonModule,
-  ],
+],
   providers: [],
   bootstrap: [AppComponent]
 })
