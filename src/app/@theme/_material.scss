@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
 @use 'palette-gen' as mat-palette-gen;
+@use 'variables';
 
 @include mat.core();
 @include mat.strong-focus-indicators((
@@ -8,13 +9,13 @@
   border-radius: 6px,
 ));
 
-$primary: mat-palette-gen.createPalette(#5b9bd5);
-$accent: mat-palette-gen.createPalette(#d5965b);
-$warn: mat-palette-gen.createPalette(#ff544f);
+$primary: mat-palette-gen.createPalette(variables.$blue);
+$accent: mat-palette-gen.createPalette(variables.$orange);
+$warn: mat-palette-gen.createPalette(variables.$red);
 
 $light-theme: mat.define-light-theme((
   color: (
-    primary: mat.define-palette($primary, 600, 300, 700),
+    primary: mat.define-palette($primary, 500, 300, 700),
     accent: mat.define-palette($accent, 500, 300, 700),
     warn: mat.define-palette($warn),
   ),
@@ -36,7 +37,7 @@ $dark-theme: mat.define-dark-theme((
 @include mat.button-theme($light-theme);
 @include mat.strong-focus-indicators-theme($light-theme);
 
-@media (prefers-color-scheme: dark) {
+.dark-theme {
   @include mat.core-color($dark-theme);
   @include mat.button-color($dark-theme);
   @include mat.strong-focus-indicators-color($dark-theme);

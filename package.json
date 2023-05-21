@@ -33,11 +33,6 @@
     "@ngrx/router-store": "^15.4.0",
     "@ngrx/store": "^15.4.0",
     "@ngrx/store-devtools": "^15.4.0",
-    "@taiga-ui/cdk": "^3.25.0",
-    "@taiga-ui/core": "^3.25.0",
-    "@taiga-ui/icons": "^3.25.0",
-    "@taiga-ui/kit": "^3.25.0",
-    "@taiga-ui/styles": "^3.25.0",
     "ngx-infinite-scroll": "^15.0.0",
     "ngx-mask": "^15.1.2",
     "rxjs": "~7.8.0",
@@ -57,6 +52,7 @@
     "@types/jasmine": "~4.3.0",
     "@typescript-eslint/eslint-plugin": "5.48.2",
     "@typescript-eslint/parser": "5.48.2",
+    "autoprefixer": "^10.4.14",
     "eslint": "^8.33.0",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
@@ -64,6 +60,8 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "postcss": "^8.4.23",
+    "tailwindcss": "^3.3.2",
     "typescript": "~4.9.4"
   }
 }

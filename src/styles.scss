@@ -1,9 +1,60 @@
-/* You can add global styles to this file, and also import other style files */
-
-@use 'app/@theme/taiga-ui';
 @use 'app/@theme/material';
+@use 'app/@theme/variables';
 
 @import "@fontsource/nunito/latin";
 
-html, body { height: 100%; }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+@layer base {
+  :root {
+    --blue: #{variables.$blue};
+    --blue-light: #{variables.$blue-light};
+    --vermilion: #{variables.$vermilion};
+    --vermilion-light: #{variables.$vermilion-light};
+    --green: #{variables.$green};
+    --green-light: #{variables.$green-light};
+    --emerald: #{variables.$emerald};
+    --emerald-light: #{variables.$emerald-light};
+    --yellow: #{variables.$yellow};
+    --yellow-light: #{variables.$yellow-light};
+    --purple: #{variables.$purple};
+    --purple-ligth: #{variables.$purple-light};
+    --gray: #{variables.$gray};
+    --gray-light: #{variables.$gray-light};
+    --graphite: #{variables.$graphite};
+    --graphite-light: #{variables.$graphite-light};
+    --orange: #{variables.$orange};
+    --orange-light: #{variables.$orange-light};
+    --red: #{variables.$red};
+    --red-light: #{variables.$red-light};
+    --white: #{variables.$white};
+  }
+
+  :root[class="dark-theme"] {
+    --blue: #{variables.$dth-blue};
+    --blue-light: #{variables.$dth-blue-light};
+    --vermilion: #{variables.$dth-vermilion};
+    --vermilion-light: #{variables.$dth-vermilion-light};
+    --green: #{variables.$dth-green};
+    --green-light: #{variables.$dth-green-light};
+    --emerald: #{variables.$dth-emerald};
+    --emerald-light: #{variables.$dth-emerald-light};
+    --yellow: #{variables.$dth-yellow};
+    --yellow-light: #{variables.$dth-yellow-light};
+    --purple: #{variables.$dth-purple};
+    --purple-ligth: #{variables.$dth-purple-light};
+    --gray: #{variables.$dth-gray};
+    --gray-light: #{variables.$dth-gray-light};
+    --graphite: #{variables.$dth-graphite};
+    --graphite-light: #{variables.$dth-graphite-light};
+    --orange: #{variables.$dth-orange};
+    --orange-light: #{variables.$dth-orange-light};
+    --red: #{variables.$dth-red};
+    --red-light: #{variables.$dth-red-light};
+    --white: #{variables.$dth-white};
+  }
+}
+
+html, body { height: 100%; }
