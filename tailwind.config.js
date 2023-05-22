@@ -81,5 +81,8 @@ module.exports = {
     },
     extend: {},
   },
+  corePlugins: {
+    fontFamily: false,
+  },
   plugins: [],
 }

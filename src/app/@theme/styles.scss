@@ -1,5 +1,5 @@
-@use 'app/@theme/material';
-@use 'app/@theme/variables';
+@use 'styles/material';
+@use 'Styles/variables';
 
 @import "@fontsource/nunito/latin";
 
@@ -55,6 +55,10 @@
     --red-light: #{variables.$dth-red-light};
     --white: #{variables.$dth-white};
   }
-}
 
-html, body { height: 100%; }
+  html {
+    font-family: Nunito, system-ui, sans-serif;
+  }
+
+  html, body { height: 100%; }
+}
