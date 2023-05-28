@@ -1,0 +1,56 @@
+<icr-wrapper>
+  <div class="text-center mb-8">
+    <h1 class="title-text mb-8">Bem-vindo(a)</h1>
+    <span>Entre com sua conta pra abrir solititações para o Instituto de Computação da UFBA</span>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid w-full py-8">
+    <div class="col-span-1">
+      <label for="sign-in--input--email" class="block mb-4">E-mail</label>
+      <mat-form-field class="w-full">
+        <input
+          matInput
+          formControlName="email"
+          id="sign-in--input--email"
+          type="email"
+          placeholder="Ex. nome@ufba.br"
+          autocomplete="username" />
+        <mat-error *ngIf="email?.invalid">
+          {{ email?.hasError('required') ? 'E-mail é obrigatório' : 'E-mail inválido' }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-span-1">
+      <label for="sign-in--input--password" class="block mb-4">Senha</label>
+      <mat-form-field class="w-full">
+        <input
+          matInput
+          formControlName="password"
+          id="sign-in--input--password"
+          [type]="hide ? 'password' : 'text'"
+          placeholder="Sua senha"
+          autocomplete="current-password" />
+        <button
+          matSuffix
+          mat-icon-button
+          type="button"
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide">
+          <mat-icon [fontIcon]="icon" />
+        </button>
+        <mat-error *ngIf="password?.invalid">Senha é obrigatório</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-span-1">
+      <a class="block float-right mb-24" [routerLink]="'request-password'">Esqueceu a senha?</a>
+    </div>
+    <div class="col-span-1">
+      <button mat-flat-button color="primary" type="submit" class="block mb-16 w-full">Entrar</button>
+    </div>
+    <div class="col-span-1">
+      <span class="text-graphite-light block text-center"
+        >Novo(a) no IC-Requests? <a [routerLink]="'../sign-up'">Crie uma conta</a> agora.</span
+      >
+    </div>
+  </form>
+</icr-wrapper>

@@ -4,13 +4,12 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 export abstract class BaseService {
-
   protected http: HttpClient;
 
   protected readonly apiUrl = environment.apiUrl;
 
   constructor() {
-    this.http = inject(HttpClient)
+    this.http = inject(HttpClient);
   }
 
   protected handleError(errorResponse: HttpErrorResponse): Observable<never> {

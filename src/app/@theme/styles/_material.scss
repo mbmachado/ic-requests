@@ -11,10 +11,6 @@
   )
 );
 
-$primary: mat-palette-gen.createPalette(variables.$blue);
-$accent: mat-palette-gen.createPalette(variables.$orange);
-$warn: mat-palette-gen.createPalette(variables.$red);
-
 /**
   Define typography levels.
   @param font-size
@@ -45,9 +41,9 @@ $typography: mat.define-typography-config(
 $light-theme: mat.define-light-theme(
   (
     color: (
-      primary: mat.define-palette($primary, 500, 300, 700),
-      accent: mat.define-palette($accent, 500, 300, 700),
-      warn: mat.define-palette($warn),
+      primary: mat.define-palette(mat-palette-gen.createPalette(variables.$blue), 500, 300, 700),
+      accent: mat.define-palette(mat-palette-gen.createPalette(variables.$orange), 500, 300, 700),
+      warn: mat.define-palette(mat-palette-gen.createPalette(variables.$red)),
     ),
     typography: $typography,
     density: 0,
@@ -57,19 +53,52 @@ $light-theme: mat.define-light-theme(
 $dark-theme: mat.define-dark-theme(
   (
     color: (
-      primary: mat.define-palette($primary, 200, 700, 50),
-      accent: mat.define-palette($accent, 200, 700, 50),
-      warn: mat.define-palette($warn),
+      primary: mat.define-palette(mat-palette-gen.createPalette(variables.$dth-blue), 500, 700, 50),
+      accent: mat.define-palette(mat-palette-gen.createPalette(variables.$dth-orange), 500, 700, 50),
+      warn: mat.define-palette(mat-palette-gen.createPalette(variables.$dth-red)),
     ),
   )
 );
 
 @include mat.core-theme($light-theme);
 @include mat.button-theme($light-theme);
+@include mat.checkbox-theme($light-theme);
+@include mat.datepicker-theme($light-theme);
+@include mat.form-field-theme($light-theme);
+@include mat.input-theme($light-theme);
+@include mat.icon-theme($light-theme);
+@include mat.icon-button-theme($light-theme);
+@include mat.menu-theme($light-theme);
+@include mat.option-theme($light-theme);
+@include mat.paginator-theme($light-theme);
+@include mat.radio-theme($light-theme);
+@include mat.select-theme($light-theme);
+@include mat.sidenav-theme($light-theme);
 @include mat.strong-focus-indicators-theme($light-theme);
 
 .dark-theme {
   @include mat.core-color($dark-theme);
   @include mat.button-color($dark-theme);
+  @include mat.checkbox-color($dark-theme);
+  @include mat.datepicker-color($dark-theme);
+  @include mat.form-field-color($dark-theme);
+  @include mat.input-color($dark-theme);
+  @include mat.icon-color($dark-theme);
+  @include mat.icon-button-color($light-theme);
+  @include mat.menu-color($dark-theme);
+  @include mat.option-color($dark-theme);
+  @include mat.paginator-color($dark-theme);
+  @include mat.radio-color($dark-theme);
+  @include mat.select-color($dark-theme);
+  @include mat.sidenav-color($dark-theme);
   @include mat.strong-focus-indicators-color($dark-theme);
+}
+
+.mdc-notched-outline__notch {
+  border-style: none;
+}
+
+.mat-mdc-form-field-hint-wrapper,
+div.mat-mdc-form-field-error-wrapper {
+  padding: 0;
 }

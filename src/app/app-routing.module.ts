@@ -7,8 +7,8 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule),
   },
-  { path: 'sign-in', loadChildren: () => import('./features/sing-in/sing-in.module').then(m => m.SingInModule) },
-  { path: 'sign-up', loadChildren: () => import('./features/sing-up/sing-up.module').then(m => m.SingUpModule) },
+  { path: 'sign-in', loadChildren: () => import('./features/sign-in/sign-in.module').then(m => m.SignInModule) },
+  { path: 'sign-up', loadChildren: () => import('./features/sign-up/sign-up.module').then(m => m.SignUpModule) },
   { path: '**', redirectTo: 'sign-in' },
 ];
 

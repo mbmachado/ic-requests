@@ -3,6 +3,7 @@
 
 @import '@fontsource/nunito/latin';
 @import '@fontsource/unica-one/latin';
+@import '@fontsource/material-icons';
 
 @tailwind base;
 @tailwind components;
@@ -63,6 +64,10 @@
 
   body {
     @apply text-base text-graphite font-medium h-full;
+  }
+
+  a {
+    @apply text-blue font-bold hover:text-blue-light focus:underline outline-none;
   }
 }
 

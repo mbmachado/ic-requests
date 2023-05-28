@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^15.2.9",
     "@angular/router": "^15.2.9",
     "@fontsource/material-icons": "^4.5.4",
+    "@fontsource/material-icons-round": "^5.0.1",
     "@fontsource/nunito": "^4.5.12",
     "@fontsource/unica-one": "^5.0.1",
     "@ngneat/dirty-check-forms": "^3.0.3",

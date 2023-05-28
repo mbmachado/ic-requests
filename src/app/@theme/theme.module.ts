@@ -5,11 +5,23 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { ButtonDirective } from './directives/button.directive';
 
-const MATERIAL_MODULES = [MatButtonModule, MatFormFieldModule, MatInputModule, MatRadioModule, MatSelectModule];
+const MATERIAL_MODULES = [
+  MatButtonModule,
+  MatIconModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatRadioModule,
+  MatSelectModule,
+];
+
+const DECLARATIONS = [ButtonDirective];
 
 @NgModule({
+  declarations: [...DECLARATIONS],
   imports: [CommonModule, ...MATERIAL_MODULES],
-  exports: [...MATERIAL_MODULES],
+  exports: [...DECLARATIONS, ...MATERIAL_MODULES],
 })
 export class ThemeModule {}
