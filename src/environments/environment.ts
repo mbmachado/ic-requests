@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8000',
+  tokenKey: '_lwM',
+  apiUrl: 'http://localhost:8000/api',
 };

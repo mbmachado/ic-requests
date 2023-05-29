@@ -1,5 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { AuthService } from '../../../../@core/services/auth.service';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,7 +6,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
   templateUrl: './reset-password.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent {
   hide = true;
 
   form = new FormGroup({
@@ -15,12 +14,6 @@ export class ResetPasswordComponent implements OnInit {
     password: new FormControl('', Validators.required),
     passwordConfirmation: new FormControl('', Validators.required),
   });
-
-  constructor(private authService: AuthService) {}
-
-  ngOnInit(): void {
-    this.authService.setCsrfCookie().subscribe();
-  }
 
   get email(): AbstractControl | null {
     return this.form.get('email');

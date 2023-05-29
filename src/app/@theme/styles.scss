@@ -66,8 +66,8 @@
     @apply text-base text-graphite font-medium h-full;
   }
 
-  a {
-    @apply text-blue font-bold hover:text-blue-light focus:underline outline-none;
+  a:not([matRipple]) {
+    @apply text-blue font-bold hover:underline focus:outline outline-blue outline-2 outline-offset-2 rounded-lg;
   }
 }
 
@@ -94,5 +94,36 @@
 
   .title-text {
     @apply text-xl font-bold;
+  }
+
+  .spinner::before {
+    content: '';
+    @apply box-border absolute top-1/2 left-1/2 w-24 h-24 mt-[-10px] ml-[-10px] border-2 border-white border-solid rounded-full;
+    border-top-color: var(--blue);
+    animation: spinner 0.8s linear infinite;
+  }
+
+  @keyframes spinner {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+@mixin snack-btn-bold {
+  button.mat-mdc-button.mat-mdc-snack-bar-action {
+    @apply text-white font-bold;
+  }
+}
+
+.snack {
+  &-success > div.mdc-snackbar__surface {
+    @apply bg-emerald;
+    @include snack-btn-bold;
+  }
+
+  &-error > div.mdc-snackbar__surface {
+    @apply bg-red;
+    @include snack-btn-bold;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from '../../../../@core/services/misc/toastr.service';
 
 @Component({
   selector: 'icr-request-password',
@@ -11,11 +12,13 @@ export class RequestPasswordComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
   });
 
+  constructor(private toastr: ToastrService) {}
+
   get email(): AbstractControl | null {
     return this.form.get('email');
   }
 
   onSubmit() {
-    window.alert('Não implementado.');
+    this.toastr.error('Não implementado.');
   }
 }

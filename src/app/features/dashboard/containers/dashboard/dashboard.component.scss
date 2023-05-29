@@ -1,0 +1,39 @@
+mat-sidenav-container.root-dashboard {
+  @apply absolute top-0 right-0 bottom-0 left-0;
+
+  mat-sidenav {
+    @apply border-0;
+    width: 200px;
+  }
+
+  mat-sidenav-content {
+    @apply bg-gray-light;
+
+    mat-toolbar {
+      @apply p-0 bg-white;
+    }
+  }
+
+  mat-icon {
+    &.icon-16 {
+      @apply w-20 h-20;
+    }
+
+    &.icon-20 {
+      @apply w-20 h-20;
+    }
+
+    &.icon-12 {
+      @apply w-12 h-12;
+    }
+  }
+
+  div.fab {
+    grid-template-columns: repeat(2, min-content);
+  }
+
+  button.user-menu {
+    grid-template-columns: min-content minmax(0, 1fr) min-content;
+    grid-template-rows: 1fr;
+  }
+}

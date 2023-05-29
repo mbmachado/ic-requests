@@ -51,7 +51,10 @@
     },
     {
       "files": ["*.ts"],
-      "extends": ["plugin:@ngrx/recommended"]
+      "extends": ["plugin:@ngrx/recommended"],
+      "rules": {
+        "@ngrx/no-store-subscription": "off"
+      }
     }
   ]
 }

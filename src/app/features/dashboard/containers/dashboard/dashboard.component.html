@@ -1,0 +1,103 @@
+<ng-container *ngrxLet="mobile$ as mobile">
+  <mat-sidenav-container class="root-dashboard">
+    <mat-sidenav
+      #sidenav
+      fixedTopGap="56"
+      [opened]="!mobile"
+      [fixedInViewport]="mobile"
+      [attr.role]="mobile ? 'dialog' : 'navigation'"
+      [mode]="mobile ? 'over' : 'side'"
+      [autoFocus]="false">
+      <div class="flex flex-col border-t-4 border-blue py-16 w-full">
+        <icr-logo class="block mx-auto mb-24" />
+
+        <div class="px-16 mb-16 w-64">
+          <div class="inline-grid shadow-1 hover:shadow-2 h-48 text-blue rounded-lg fab transition">
+            <button
+              matRipple
+              class="flex items-center h-full px-8 rounded-l-lg hover:bg-blue-light transition"
+              type="button">
+              <mat-icon svgIcon="plus" />
+              <span class="base-text-bold ml-8">Novo</span>
+            </button>
+            <button
+              matRipple
+              class="flex items-center border-l border-gray h-full px-8 rounded-r-lg hover:bg-blue-light transition"
+              type="button"
+              [matMenuTriggerFor]="newMenu">
+              <mat-icon svgIcon="caret-down" class="icon-12" />
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 pr-4">
+          <ng-container *ngFor="let menuItem of menuItems">
+            <a
+              matRipple
+              class="flex items-center base-text-bold text-blue py-4 px-16 h-40 rounded-r-full hover:bg-blue-light focus:outline-1 outline-blue outline-offset-1 transition"
+              routerLinkActive="bg-blue-light"
+              [routerLink]="[menuItem.link]">
+              <mat-icon [svgIcon]="menuItem.icon" class="icon-20" />
+              <span class="block ml-16">{{ menuItem.label }}</span>
+            </a>
+          </ng-container>
+        </div>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content id="u_1sqW">
+      <mat-toolbar>
+        <div class="flex items-center px-16">
+          <div class="base-text-bold uppercase">Início</div>
+        </div>
+
+        <div class="flex-1"></div>
+
+        <div class="px-16">
+          <button
+            class="flex items-center justify-center h-40 w-40 border border-gray-light rounded text-graphite-light"
+            type="button"
+            (click)="onChangeTheme()">
+            <mat-icon [svgIcon]="isDarkTheme ? 'moon' : 'sun'" class="icon-16" />
+          </button>
+        </div>
+
+        <div class="flex items-center h-full border-l border-gray-light px-8">
+          <button
+            matRipple
+            class="grid grid-cols-{{ mobile ? 2 : 3 }} user-menu p-8 rounded"
+            type="button"
+            [matMenuTriggerFor]="userMenu">
+            <div
+              class="flex items-center justify-center w-40 h-40 rounded-full bg-gray-light text-graphite-light mr-16">
+              <mat-icon svgIcon="user" class="icon-16" />
+            </div>
+            <div *ngIf="!mobile" class="flex flex-col text-left mr-8">
+              <span class="base-text-bold text-blue">Mateus Machado</span>
+              <span class="base-text text-graphite-light">Ciência da Computação</span>
+            </div>
+            <div class="flex items-center text-blue h-40">
+              <mat-icon svgIcon="caret-down" class="icon-12" />
+            </div>
+          </button>
+        </div>
+      </mat-toolbar>
+
+      <main class="dashboard-content d-block mx-auto w-100">
+        <router-outlet></router-outlet>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-container>
+
+<mat-menu #userMenu="matMenu" xPosition="before">
+  <button mat-menu-item (click)="onSignOut()">
+    <mat-icon>power_settings_new</mat-icon>
+    <span>Sair</span>
+  </button>
+</mat-menu>
+
+<mat-menu #newMenu="matMenu" xPosition="before">
+  <button mat-menu-item>Aproveitamento de C.H.</button>
+  <button mat-menu-item>Comprovante de Matrícula</button>
+  <button mat-menu-item>Aproveitamento de Estudos</button>
+</mat-menu>

@@ -1,5 +1,6 @@
 import { LOCALE_ID, ModuleWithProviders, NgModule, Optional, SkipSelf, isDevMode } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import localeBr from '@angular/common/locales/pt';
 
@@ -26,6 +27,7 @@ registerLocaleData(localeBr, 'pt-BR');
     EffectsModule.forRoot([UserContextEffects]),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    MatSnackBarModule,
   ],
 })
 export class CoreModule {
@@ -51,6 +53,10 @@ export class CoreModule {
         {
           provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
           useValue: { appearance: 'outline' },
+        },
+        {
+          provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+          useValue: { duration: 500000, horizontalPosition: 'center', verticalPosition: 'top' },
         },
       ],
     };

@@ -29,11 +29,11 @@ $typography: mat.define-typography-config(
   $headline-4: mat.define-typography-level(34px, 40px, 400),
   $headline-5: mat.define-typography-level(24px, 32px, 400),
   $headline-6: mat.define-typography-level(20px, 32px, 500),
-  $subtitle-1: mat.define-typography-level(16px, 28px, 400),
+  $subtitle-1: mat.define-typography-level(16px, 28px, 500),
   $subtitle-2: mat.define-typography-level(14px, 22px, 500),
-  $body-1: mat.define-typography-level(16px, 24px, 400),
-  $body-2: mat.define-typography-level(12px, 20px, 400),
-  $caption: mat.define-typography-level(12px, 20px, 400),
+  $body-1: mat.define-typography-level(16px, 24px, 500),
+  $body-2: mat.define-typography-level(14px, 20px, 500),
+  $caption: mat.define-typography-level(12px, 20px, 500),
   $button: mat.define-typography-level(14px, 36px, 500),
   $overline: mat.define-typography-level(12px, 32px, 500),
 );
@@ -74,23 +74,33 @@ $dark-theme: mat.define-dark-theme(
 @include mat.radio-theme($light-theme);
 @include mat.select-theme($light-theme);
 @include mat.sidenav-theme($light-theme);
+@include mat.tooltip-theme($light-theme);
+@include mat.toolbar-theme($light-theme);
 @include mat.strong-focus-indicators-theme($light-theme);
+
+@include mat.snack-bar-color($light-theme);
+@include mat.snack-bar-typography(
+  mat.define-typography-config($font-family: 'Nunito', $body-2: mat.define-typography-level(16px, 24px, 600))
+);
 
 .dark-theme {
   @include mat.core-color($dark-theme);
   @include mat.button-color($dark-theme);
-  @include mat.checkbox-color($dark-theme);
-  @include mat.datepicker-color($dark-theme);
+  @include mat.checkbox-color($dark-theme); // Not used
+  @include mat.datepicker-color($dark-theme); // Not used
   @include mat.form-field-color($dark-theme);
   @include mat.input-color($dark-theme);
   @include mat.icon-color($dark-theme);
   @include mat.icon-button-color($light-theme);
   @include mat.menu-color($dark-theme);
-  @include mat.option-color($dark-theme);
-  @include mat.paginator-color($dark-theme);
-  @include mat.radio-color($dark-theme);
-  @include mat.select-color($dark-theme);
+  @include mat.option-color($dark-theme); // Not used
+  @include mat.paginator-color($dark-theme); // Not used
+  @include mat.radio-color($dark-theme); // Not used
+  @include mat.select-color($dark-theme); // Not used
   @include mat.sidenav-color($dark-theme);
+  @include mat.snack-bar-color($dark-theme);
+  @include mat.tooltip-color($dark-theme); // Not used
+  @include mat.toolbar-color($dark-theme);
   @include mat.strong-focus-indicators-color($dark-theme);
 }
 
@@ -100,5 +110,9 @@ $dark-theme: mat.define-dark-theme(
 
 .mat-mdc-form-field-hint-wrapper,
 div.mat-mdc-form-field-error-wrapper {
-  padding: 0;
+  @apply p-0;
+}
+
+.mat-mdc-menu-content button.mat-mdc-menu-item {
+  @apply min-h-[36px];
 }

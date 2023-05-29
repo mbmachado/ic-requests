@@ -45,7 +45,17 @@
       <a class="block float-right mb-24" [routerLink]="'request-password'">Esqueceu a senha?</a>
     </div>
     <div class="col-span-1">
-      <button mat-flat-button color="primary" type="submit" class="block mb-16 w-full">Entrar</button>
+      <ng-container *ngrxLet="loading$ as loading">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          class="block mb-16 w-full"
+          [class.spinner]="loading"
+          [disabled]="loading">
+          Entrar
+        </button>
+      </ng-container>
     </div>
     <div class="col-span-1">
       <span class="text-graphite-light block text-center"

@@ -4,7 +4,8 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/f
 import { Store } from '@ngrx/store';
 
 import { signIn } from '../../../../@core/state/user-context/user-context.actions';
-
+import { Observable } from 'rxjs';
+import * as fromUserContextSelectors from '../../../../@core/state/user-context/user-context.selectors';
 interface SignUpForm {
   email: FormControl<string>;
   password: FormControl<string>;
@@ -16,10 +17,14 @@ interface SignUpForm {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInComponent {
+  loading$: Observable<boolean>;
+
   form: FormGroup<SignUpForm>;
   hide = true;
 
   constructor(private formBuilder: FormBuilder, private store: Store) {
+    this.loading$ = this.store.select(fromUserContextSelectors.selectSignInLoading);
+
     this.form = this.formBuilder.nonNullable.group({
       email: '',
       password: '',
