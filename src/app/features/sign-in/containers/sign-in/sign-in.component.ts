@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
 
@@ -23,11 +23,11 @@ export class SignInComponent {
   hide = true;
 
   constructor(private formBuilder: FormBuilder, private store: Store) {
-    this.loading$ = this.store.select(fromUserContextSelectors.selectSignInLoading);
+    this.loading$ = this.store.select(fromUserContextSelectors.selectLoading);
 
     this.form = this.formBuilder.nonNullable.group({
-      email: '',
-      password: '',
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
     });
   }
 

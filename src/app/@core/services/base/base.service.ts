@@ -13,12 +13,14 @@ export abstract class BaseService {
   }
 
   protected handleError(errorResponse: HttpErrorResponse): Observable<never> {
-    let message = errorResponse?.message || 'Algo deu errado.';
+    let message = errorResponse?.error?.message || 'Algo deu errado.';
+    let cause = errorResponse?.message;
 
     if (errorResponse?.status === 422) {
-      message = 'Dados inválidos.';
+      message = `Dados inválidos. ${message}`;
+      cause = errorResponse?.error?.errors;
     }
 
-    throw new Error(message, { cause: errorResponse });
+    throw new Error(message, { cause });
   }
 }

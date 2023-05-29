@@ -25,8 +25,8 @@ export class UserContextEffects {
             this.toastr.success('Login realizado com sucesso.');
 
             return fromUserContextActions.signInSuccess({
-              encoded: access_token,
               payload: this.jwtHelper.decodeToken<TokenPayload>(access_token),
+              raw: access_token,
             });
           }),
           catchError(() => {
@@ -77,6 +77,42 @@ export class UserContextEffects {
         ofType(fromUserContextActions.signOutSuccess),
         tap(() => {
           this.router.navigateByUrl('/sign-in');
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
+  signUp$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromUserContextActions.signUp),
+      exhaustMap(({ data }) => {
+        return this.authService.signUp(data).pipe(
+          map(({ access_token }: TokenDTO) => {
+            localStorage.setItem(environment.tokenKey, access_token);
+            this.toastr.success('Cadastro realizado com sucesso.');
+
+            return fromUserContextActions.signInSuccess({
+              payload: this.jwtHelper.decodeToken<TokenPayload>(access_token),
+              raw: access_token,
+            });
+          }),
+          catchError((error: Error) => {
+            this.toastr.error(error.message);
+
+            return of(fromUserContextActions.signInFailure());
+          })
+        );
+      })
+    );
+  });
+
+  redirectAfterSignUp$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(fromUserContextActions.signUpSuccess),
+        tap(() => {
+          this.router.navigateByUrl('/dashboard');
         })
       );
     },

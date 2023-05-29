@@ -6,28 +6,22 @@ import * as fromUserContextActions from './user-context.actions';
 export const userContextKey = 'userContext';
 
 export interface UserContextState {
-  user?: Partial<User>;
-  login: {
-    error: boolean;
-    loading: boolean;
-    loggedIn: boolean;
-  };
+  error: boolean;
+  loading: boolean;
+  loggedIn: boolean;
   token: {
-    encoded?: string;
     payload?: TokenPayload;
+    raw?: string;
   };
 }
 
 const userContextInitialState: UserContextState = {
-  user: undefined,
-  login: {
-    error: false,
-    loading: false,
-    loggedIn: false,
-  },
+  error: false,
+  loading: false,
+  loggedIn: false,
   token: {
-    encoded: undefined,
     payload: undefined,
+    raw: undefined,
   },
 };
 
@@ -35,15 +29,11 @@ export const userContextReducer = createReducer(
   userContextInitialState,
   on(
     fromUserContextActions.signIn,
+    fromUserContextActions.signUp,
     (state): UserContextState => ({
-      user: {
-        ...state.user,
-      },
-      login: {
-        ...state.login,
-        error: false,
-        loading: true,
-      },
+      ...state,
+      error: false,
+      loading: true,
       token: {
         ...state.token,
       },
@@ -51,39 +41,25 @@ export const userContextReducer = createReducer(
   ),
   on(
     fromUserContextActions.signInSuccess,
+    fromUserContextActions.signUpSuccess,
     fromUserContextActions.restoreSignIn,
-    (state, { payload, encoded }): UserContextState => ({
+    (state, { payload, raw }): UserContextState => ({
       ...state,
-      user: {
-        ...state.user,
-        id: Number(payload?.sub),
-        name: payload?.user?.name,
-        role: payload?.user?.role,
-        type: payload?.user?.type,
-        course: payload?.user?.course,
-      },
-      login: {
-        ...state.login,
-        loading: false,
-        loggedIn: true,
-      },
+      loading: false,
+      loggedIn: true,
       token: {
-        encoded,
+        raw,
         payload: payload ?? undefined,
       },
     })
   ),
   on(
     fromUserContextActions.signInFailure,
+    fromUserContextActions.signUpFailure,
     (state): UserContextState => ({
-      user: {
-        ...state.user,
-      },
-      login: {
-        ...state.login,
-        error: true,
-        loading: false,
-      },
+      ...state,
+      error: true,
+      loading: false,
       token: {
         ...state.token,
       },
@@ -91,14 +67,8 @@ export const userContextReducer = createReducer(
   ),
   on(
     fromUserContextActions.signOutSuccess,
-    (state): UserContextState => ({
-      ...state,
-      user: {
-        ...userContextInitialState.user,
-      },
-      login: {
-        ...userContextInitialState.login,
-      },
+    (): UserContextState => ({
+      ...userContextInitialState,
       token: {
         ...userContextInitialState.token,
       },

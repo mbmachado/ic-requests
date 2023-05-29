@@ -14,16 +14,16 @@ import { restoreSignIn } from './@core/state/user-context/user-context.actions';
 
 function initializeAppFactory(store: Store, jwtHelper: JwtHelperService): () => void {
   return () => {
-    const encoded = localStorage.getItem(environment.tokenKey);
+    const raw = localStorage.getItem(environment.tokenKey);
 
-    if (encoded) {
-      const payload = jwtHelper.decodeToken<TokenPayload>(encoded);
+    if (raw) {
+      const payload = jwtHelper.decodeToken<TokenPayload>(raw);
 
       if (payload) {
         const date = new Date(payload.exp * 1000);
 
         if (date.valueOf() > new Date().valueOf()) {
-          store.dispatch(restoreSignIn({ encoded, payload }));
+          store.dispatch(restoreSignIn({ payload, raw }));
         }
       }
     }
