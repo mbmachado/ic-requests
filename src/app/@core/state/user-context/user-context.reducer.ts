@@ -1,5 +1,4 @@
 import { createReducer, on } from '@ngrx/store';
-import { User } from '../../models/user.model';
 import { TokenPayload } from '../../models/token-payload.model';
 import * as fromUserContextActions from './user-context.actions';
 

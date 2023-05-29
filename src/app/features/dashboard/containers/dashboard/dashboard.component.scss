@@ -14,20 +14,6 @@ mat-sidenav-container.root-dashboard {
     }
   }
 
-  mat-icon {
-    &.icon-16 {
-      @apply w-20 h-20;
-    }
-
-    &.icon-20 {
-      @apply w-20 h-20;
-    }
-
-    &.icon-12 {
-      @apply w-12 h-12;
-    }
-  }
-
   div.fab {
     grid-template-columns: repeat(2, min-content);
   }

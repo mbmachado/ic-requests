@@ -127,3 +127,21 @@
     @include snack-btn-bold;
   }
 }
+
+mat-icon {
+  &.icon-12 {
+    @apply w-12 h-12;
+  }
+
+  &.icon-16 {
+    @apply w-16 h-16;
+  }
+
+  &.icon-20 {
+    @apply w-20 h-20;
+  }
+}
+
+.fullscreen-dialog {
+  @apply h-full w-full;
+}

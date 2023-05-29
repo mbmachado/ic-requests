@@ -5,7 +5,7 @@ import { Course } from '../../@core/models/enums/course.enum';
   name: 'course',
 })
 export class CoursePipe implements PipeTransform {
-  transform(value: Course): string {
+  transform(value?: Course): string {
     switch (value) {
       case Course.ComputerScience:
         return 'Ciência da Computação';

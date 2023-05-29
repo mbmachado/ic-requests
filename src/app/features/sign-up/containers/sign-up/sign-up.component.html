@@ -76,7 +76,7 @@
     <div class="col-span-1">
       <label for="sign-up--input--course" class="block mb-4">Curso</label>
       <mat-form-field class="w-full">
-        <mat-select id="sign-up--input--course">
+        <mat-select id="sign-up--input--course" formControlName="course">
           <mat-option *ngFor="let course of couses" [value]="course">
             {{ course | course }}
           </mat-option>

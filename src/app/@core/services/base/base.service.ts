@@ -21,6 +21,6 @@ export abstract class BaseService {
       cause = errorResponse?.error?.errors;
     }
 
-    throw new Error(message, { cause });
+    throw new Error(message);
   }
 }

@@ -3,10 +3,12 @@ import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { Observable, map, shareReplay } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import * as fromUserContextSelectors from '../../../../@core/state/user-context/user-context.selectors';
 import * as fromUserContextActions from '../../../../@core/state/user-context/user-context.actions';
+import { User } from '../../../../@core/models/user.model';
 
 interface MenuItem {
   icon: string;
@@ -20,6 +22,7 @@ interface MenuItem {
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
+  public authUser$: Observable<Partial<User> | undefined>;
   public mobile$: Observable<boolean>;
   public isDarkTheme: boolean;
 
@@ -44,14 +47,13 @@ export class DashboardComponent {
   ) {
     this.registerIcons(iconRegistry, sanitizer);
 
+    this.authUser$ = this.store.select(fromUserContextSelectors.selectAuthUser);
+
+    this.mobile$ = breakpointObserver.observe(['(max-width: 600px)']).pipe(map(result => result.matches));
+
     this.isDarkTheme =
       localStorage['theme'] === 'dark' ||
       (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
-
-    this.mobile$ = breakpointObserver.observe(['(max-width: 600px)']).pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
   }
 
   onChangeTheme() {
@@ -78,6 +80,10 @@ export class DashboardComponent {
     iconRegistry.addSvgIcon(
       'caret-down',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/caret-down-solid.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'right-from-bracket',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/right-from-bracket-solid.svg')
     );
 
     iconRegistry.addSvgIcon('plus', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/plus-solid.svg'));

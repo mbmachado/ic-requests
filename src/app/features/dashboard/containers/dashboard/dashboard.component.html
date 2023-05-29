@@ -54,10 +54,10 @@
 
         <div class="px-16">
           <button
-            class="flex items-center justify-center h-40 w-40 border border-gray-light rounded text-graphite-light"
+            class="flex items-center justify-center h-40 w-40 border border-gray-light rounded text-graphite-light hover:text-blue hover:border-blue transition"
             type="button"
             (click)="onChangeTheme()">
-            <mat-icon [svgIcon]="isDarkTheme ? 'moon' : 'sun'" class="icon-16" />
+            <mat-icon [svgIcon]="isDarkTheme ? 'moon' : 'sun'" class="icon-20" />
           </button>
         </div>
 
@@ -72,8 +72,10 @@
               <mat-icon svgIcon="user" class="icon-16" />
             </div>
             <div *ngIf="!mobile" class="flex flex-col text-left mr-8">
-              <span class="base-text-bold text-blue">Mateus Machado</span>
-              <span class="base-text text-graphite-light">Ciência da Computação</span>
+              <ng-container *ngrxLet="authUser$ as user">
+                <span class="base-text-bold text-blue">{{ user?.name || '--' }}</span>
+                <span class="base-text text-graphite-light">{{ user?.course | course }}</span>
+              </ng-container>
             </div>
             <div class="flex items-center text-blue h-40">
               <mat-icon svgIcon="caret-down" class="icon-12" />
@@ -84,20 +86,21 @@
 
       <main class="dashboard-content d-block mx-auto w-100">
         <router-outlet></router-outlet>
+        <router-outlet name="popup"></router-outlet>
       </main>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </ng-container>
 
 <mat-menu #userMenu="matMenu" xPosition="before">
-  <button mat-menu-item (click)="onSignOut()">
-    <mat-icon>power_settings_new</mat-icon>
-    <span>Sair</span>
-  </button>
+  <button mat-menu-item (click)="onSignOut()"><mat-icon class="icon-20" svgIcon="right-from-bracket" />Sair</button>
 </mat-menu>
 
 <mat-menu #newMenu="matMenu" xPosition="before">
-  <button mat-menu-item>Aproveitamento de C.H.</button>
-  <button mat-menu-item>Comprovante de Matrícula</button>
+  <button mat-menu-item [routerLink]="[{ outlets: { popup: ['request'] } }]" [queryParams]="{ prop: 'xxx' }">
+    Aproveitamento de C.H.
+  </button>
   <button mat-menu-item>Aproveitamento de Estudos</button>
+  <button mat-menu-item>Comprovante de Matrícula</button>
+  <button mat-menu-item>Assinatura Termo Estágio</button>
 </mat-menu>

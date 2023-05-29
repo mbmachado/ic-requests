@@ -29,8 +29,8 @@ export class UserContextEffects {
               raw: access_token,
             });
           }),
-          catchError(() => {
-            this.toastr.error('Não foi possível realizar o login.');
+          catchError((error: Error) => {
+            this.toastr.error(error.message);
 
             return of(fromUserContextActions.signInFailure());
           })

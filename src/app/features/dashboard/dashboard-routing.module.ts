@@ -14,6 +14,11 @@ const routes: Routes = [
         children: [
           { path: '', redirectTo: 'workspace', pathMatch: 'full' },
           {
+            path: 'request',
+            loadChildren: () => import('./features/new-request/new-request.module').then(m => m.NewRequestModule),
+            outlet: 'popup',
+          },
+          {
             path: 'profile',
             loadChildren: () => import('./features/my-profile/my-profile.module').then(m => m.MyProfileModule),
           },

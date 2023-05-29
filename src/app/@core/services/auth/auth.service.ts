@@ -17,7 +17,7 @@ export class AuthService extends BaseService {
   }
 
   signIn(data: SignInDTO): Observable<TokenDTO> {
-    return this.http.post<TokenDTO>(`${this.apiUrl}/sign-in`, data);
+    return this.http.post<TokenDTO>(`${this.apiUrl}/sign-in`, data).pipe(catchError(this.handleError));
   }
 
   signOut(): Observable<void> {
