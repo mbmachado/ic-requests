@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   tokenKey: '_lwM',
-  apiUrl: 'http://localhost:8000/api',
+  apiUrl: 'https://ic-requests-api-production.up.railway.app/api',
 };
