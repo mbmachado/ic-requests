@@ -1,0 +1,10 @@
+.workspace-root {
+  grid-template-columns: min-content minmax(0, 1fr);
+  a.card > div {
+    grid-template-columns: minmax(0, 1fr) min-content;
+  }
+
+  aside {
+    grid-template-rows: repeat(2, min-content) minmax(0, 1fr);
+  }
+}

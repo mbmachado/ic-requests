@@ -2,7 +2,7 @@
   <mat-sidenav-container class="root-dashboard">
     <mat-sidenav
       #sidenav
-      fixedTopGap="56"
+      fixedTopGap="0"
       [opened]="!mobile"
       [fixedInViewport]="mobile"
       [attr.role]="mobile ? 'dialog' : 'navigation'"
@@ -15,14 +15,15 @@
           <div class="inline-grid shadow-1 hover:shadow-2 h-48 text-blue rounded-lg fab transition">
             <button
               matRipple
-              class="flex items-center h-full px-8 rounded-l-lg hover:bg-blue-light transition"
-              type="button">
+              class="flex items-center h-full px-8 rounded-l-lg hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+              type="button"
+              [routerLink]="[{ outlets: { popup: ['request'] } }]">
               <mat-icon svgIcon="plus" />
               <span class="base-text-bold ml-8">Novo</span>
             </button>
             <button
               matRipple
-              class="flex items-center border-l border-gray h-full px-8 rounded-r-lg hover:bg-blue-light transition"
+              class="flex items-center border-l border-gray h-full px-8 rounded-r-lg hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
               type="button"
               [matMenuTriggerFor]="newMenu">
               <mat-icon svgIcon="caret-down" class="icon-12" />
@@ -34,7 +35,7 @@
           <ng-container *ngFor="let menuItem of menuItems">
             <a
               matRipple
-              class="flex items-center base-text-bold text-blue py-4 px-16 h-40 rounded-r-full hover:bg-blue-light focus:outline-1 outline-blue outline-offset-1 transition"
+              class="flex items-center base-text-bold text-blue py-4 px-16 h-40 rounded-r-full hover:bg-blue-light focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition"
               routerLinkActive="bg-blue-light"
               [routerLink]="[menuItem.link]">
               <mat-icon [svgIcon]="menuItem.icon" class="icon-20" />
@@ -45,49 +46,63 @@
       </div>
     </mat-sidenav>
     <mat-sidenav-content id="u_1sqW">
-      <mat-toolbar>
-        <div class="flex items-center px-16">
-          <div class="base-text-bold uppercase">Início</div>
+      <div class="grid grid-cols-1 h-full">
+        <div id="dashboard--div--toolbar" class="flex items-center h-64 p-0 bg-white">
+          <div *ngIf="mobile" class="flex items-center justify-center w-64 h-full">
+            <button
+              matRipple
+              class="flex items-center justify-center h-40 w-40 border border-gray-light rounded text-graphite-light hover:text-blue hover:border-blue hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+              type="button"
+              aria-label="Menu"
+              (click)="sidenav.toggle()">
+              <mat-icon svgIcon="bars" class="icon-20" />
+            </button>
+          </div>
+
+          <div class="base-text-bold uppercase px-16">Início</div>
+
+          <div class="flex-1"></div>
+
+          <div class="px-16">
+            <button
+              matRipple
+              class="flex items-center justify-center h-40 w-40 border border-gray-light rounded text-graphite-light hover:text-blue hover:border-blue hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+              type="button"
+              (click)="onChangeTheme()">
+              <mat-icon [svgIcon]="isDarkTheme ? 'moon' : 'sun'" class="icon-20" />
+            </button>
+          </div>
+
+          <div class="flex items-center h-full border-l border-gray-light px-8">
+            <button
+              matRipple
+              class="grid grid-cols-{{
+                mobile ? 2 : 3
+              }} user-menu py-4 pl-4 pr-8 rounded-full focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition hover:bg-blue-light"
+              type="button"
+              [matMenuTriggerFor]="userMenu">
+              <div
+                class="flex items-center justify-center w-40 h-40 rounded-full bg-gray-light text-graphite-light mr-16">
+                <mat-icon svgIcon="user" class="icon-16" />
+              </div>
+              <div *ngIf="!mobile" class="flex flex-col text-left mr-8">
+                <ng-container *ngrxLet="authUser$ as user">
+                  <span class="base-text-bold text-blue">{{ user?.name || '--' }}</span>
+                  <span class="base-text text-graphite-light">{{ user?.course | course }}</span>
+                </ng-container>
+              </div>
+              <div class="flex items-center text-blue h-40">
+                <mat-icon svgIcon="caret-down" class="icon-12" />
+              </div>
+            </button>
+          </div>
         </div>
 
-        <div class="flex-1"></div>
-
-        <div class="px-16">
-          <button
-            class="flex items-center justify-center h-40 w-40 border border-gray-light rounded text-graphite-light hover:text-blue hover:border-blue transition"
-            type="button"
-            (click)="onChangeTheme()">
-            <mat-icon [svgIcon]="isDarkTheme ? 'moon' : 'sun'" class="icon-20" />
-          </button>
-        </div>
-
-        <div class="flex items-center h-full border-l border-gray-light px-8">
-          <button
-            matRipple
-            class="grid grid-cols-{{ mobile ? 2 : 3 }} user-menu p-8 rounded"
-            type="button"
-            [matMenuTriggerFor]="userMenu">
-            <div
-              class="flex items-center justify-center w-40 h-40 rounded-full bg-gray-light text-graphite-light mr-16">
-              <mat-icon svgIcon="user" class="icon-16" />
-            </div>
-            <div *ngIf="!mobile" class="flex flex-col text-left mr-8">
-              <ng-container *ngrxLet="authUser$ as user">
-                <span class="base-text-bold text-blue">{{ user?.name || '--' }}</span>
-                <span class="base-text text-graphite-light">{{ user?.course | course }}</span>
-              </ng-container>
-            </div>
-            <div class="flex items-center text-blue h-40">
-              <mat-icon svgIcon="caret-down" class="icon-12" />
-            </div>
-          </button>
-        </div>
-      </mat-toolbar>
-
-      <main class="dashboard-content d-block mx-auto w-100">
-        <router-outlet></router-outlet>
-        <router-outlet name="popup"></router-outlet>
-      </main>
+        <main class="d-block mx-auto w-full h-full">
+          <router-outlet />
+          <router-outlet name="popup" />
+        </main>
+      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </ng-container>
@@ -97,10 +112,31 @@
 </mat-menu>
 
 <mat-menu #newMenu="matMenu" xPosition="before">
-  <button mat-menu-item [routerLink]="[{ outlets: { popup: ['request'] } }]" [queryParams]="{ prop: 'xxx' }">
+  <button
+    mat-menu-item
+    [routerLink]="[{ outlets: { popup: ['request'] } }]"
+    [queryParams]="{ type: requestType.WorkloadClaim }">
     Aproveitamento de C.H.
   </button>
-  <button mat-menu-item>Aproveitamento de Estudos</button>
-  <button mat-menu-item>Comprovante de Matrícula</button>
-  <button mat-menu-item>Assinatura Termo Estágio</button>
+  <button
+    mat-menu-item
+    [routerLink]="[{ outlets: { popup: ['request'] } }]"
+    [queryParams]="{ type: requestType.EnrollmentProof }">
+    Comprovante de Matrícula
+  </button>
+  <button
+    mat-menu-item
+    [routerLink]="[{ outlets: { popup: ['request'] } }]"
+    [queryParams]="{ type: requestType.InternshipTermSigning }">
+    Assinatura Termo Estágio
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button
+    mat-menu-item
+    [routerLink]="[{ outlets: { popup: ['request'] } }]"
+    [queryParams]="{ type: requestType.Question }">
+    Pergunta / Dúvida
+  </button>
 </mat-menu>

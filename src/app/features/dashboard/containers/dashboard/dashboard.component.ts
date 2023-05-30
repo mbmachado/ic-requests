@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import * as fromUserContextSelectors from '../../../../@core/state/user-context/user-context.selectors';
 import * as fromUserContextActions from '../../../../@core/state/user-context/user-context.actions';
 import { User } from '../../../../@core/models/user.model';
+import { RequestType } from '../../../../@core/models/enums/request-type.enum';
 
 interface MenuItem {
   icon: string;
@@ -39,6 +40,8 @@ export class DashboardComponent {
     },
   ];
 
+  readonly requestType = RequestType;
+
   constructor(
     breakpointObserver: BreakpointObserver,
     iconRegistry: MatIconRegistry,
@@ -49,7 +52,7 @@ export class DashboardComponent {
 
     this.authUser$ = this.store.select(fromUserContextSelectors.selectAuthUser);
 
-    this.mobile$ = breakpointObserver.observe(['(max-width: 600px)']).pipe(map(result => result.matches));
+    this.mobile$ = breakpointObserver.observe(['(max-width: 640px)']).pipe(map(result => result.matches));
 
     this.isDarkTheme =
       localStorage['theme'] === 'dark' ||
@@ -85,7 +88,22 @@ export class DashboardComponent {
       'right-from-bracket',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/right-from-bracket-solid.svg')
     );
+    iconRegistry.addSvgIcon(
+      'angle-left',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/angle-left-solid.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'file-circle-check',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/file-circle-check-solid.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'search',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/magnifying-glass-solid.svg')
+    );
 
+    iconRegistry.addSvgIcon('flag', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/flag-solid.svg'));
+    iconRegistry.addSvgIcon('bars', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/bars-solid.svg'));
+    iconRegistry.addSvgIcon('plus', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/plus-solid.svg'));
     iconRegistry.addSvgIcon('plus', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/plus-solid.svg'));
     iconRegistry.addSvgIcon('user', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/user-solid.svg'));
     iconRegistry.addSvgIcon('moon', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/moon-solid.svg'));

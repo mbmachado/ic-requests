@@ -14,6 +14,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { httpInterceptorProviders } from './interceptors';
 import { UserContextEffects } from './state/user-context/user-context.effects';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 registerLocaleData(localeBr, 'pt-BR');
 
@@ -49,6 +50,10 @@ export class CoreModule {
         {
           provide: LOCALE_ID,
           useValue: 'pt-BR',
+        },
+        {
+          provide: STEPPER_GLOBAL_OPTIONS,
+          useValue: { showError: true },
         },
         {
           provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,

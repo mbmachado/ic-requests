@@ -2,15 +2,15 @@ mat-sidenav-container.root-dashboard {
   @apply absolute top-0 right-0 bottom-0 left-0;
 
   mat-sidenav {
-    @apply border-0;
+    @apply border-l border-gray-light dark:border-0;
     width: 200px;
   }
 
   mat-sidenav-content {
     @apply bg-gray-light;
 
-    mat-toolbar {
-      @apply p-0 bg-white;
+    & > div {
+      grid-template-rows: min-content minmax(0, 1fr);
     }
   }
 

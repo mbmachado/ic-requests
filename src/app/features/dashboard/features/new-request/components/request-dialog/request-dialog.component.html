@@ -1,10 +1,63 @@
 <div class="flex items-center h-64 bg-white mb-24">
+  <div class="flex items-center justify-center w-64 h-full border-r border-gray">
+    <button mat-icon-button color="primary" aria-label="Voltar" (click)="onClose()">
+      <mat-icon svgIcon="angle-left" />
+    </button>
+  </div>
+
+  <div class="px-16">
+    <div class="inline-grid grid-rows-1 gap-16 modal-header">
+      <div class="flex items-center text-blue h-full">
+        <mat-icon svgIcon="file-circle-check"></mat-icon>
+      </div>
+      <div class="text-left">
+        <div class="base-text-bold text-blue uppercase">Nova solicitação</div>
+        <div class="label text-graphite-light truncate">Crie uma solitação para ser enviada ao IC-UFBA</div>
+      </div>
+    </div>
+  </div>
+
   <div class="flex-1"></div>
 
-  <button (click)="onClose()">Cancelar</button>
+  <div class="px-16">
+    <button mat-stroked-button color="warn" (click)="onClose()">Cancelar</button>
+  </div>
 </div>
 
-<div class="block bg-white max-w-[600px] w-full rounded-none sm:rounded mx-auto">
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla, aspernatur. Temporibus amet, distinctio nesciunt nemo
-  qui ipsum repudiandae debitis recusandae, quia ullam quidem nihil enim suscipit veniam animi quae dicta.
+<div class="block bg-white max-w-[600px] w-full rounded-none sm:rounded mx-auto overflow-hidden">
+  <mat-stepper orientation="vertical" #stepper>
+    <mat-step [stepControl]="requestTypeForm" errorMessage="Dados inválidos">
+      <form [formGroup]="requestTypeForm">
+        <ng-template matStepLabel>
+          {{ !stepper.selectedIndex ? 'Tipo Solicitação' : (requestType?.value | requestType) }}
+        </ng-template>
+
+        <div class="mt-24">
+          <label for="new-request--input--request-type" class="block mb-4"
+            >Solicitação <span class="text-red">*</span></label
+          >
+          <mat-form-field class="w-full">
+            <mat-select id="new-request--input--request-type" formControlName="requestType">
+              <mat-option *ngFor="let requestType of requestTypes" [value]="requestType">
+                {{ requestType | requestType }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="requestType?.invalid">Solicitação é obrigatório</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <button mat-flat-button color="primary" matStepperNext>Avançar</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step errorMessage="Dados inválidos">
+      <ng-template matStepLabel>Dados da Solicitação</ng-template>
+
+      <div class="mt-24">
+        <button mat-flat-button color="primary">Enviar</button>
+        <button mat-button matStepperPrevious class="ml-16">Voltar</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
 </div>

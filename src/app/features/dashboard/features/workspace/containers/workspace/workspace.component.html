@@ -1,0 +1,55 @@
+<div class="grid grid-rows-1 h-full w-full workspace-root">
+  <aside class="grid grid-cols-1 w-[300px] h-full max-h-full bg-white border-t border-gray-light">
+    <div class="p-16 border-b border-gray-light">
+      <div class="relative">
+        <input
+          type="text"
+          class="h-40 bg-white border border-gray-light w-full rounded pl-16 pr-48 py-8 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+          placeholder="Pesquisar" />
+        <div class="absolute top-0 right-16 bottom-0 flex items-center">
+          <mat-icon svgIcon="search" class="text-graphite-light icon-20" />
+        </div>
+      </div>
+    </div>
+
+    <div class="px-16 py-8 border-b border-gray-light">
+      <span class="label-text uppercase">Minhas solicitações</span>
+    </div>
+
+    <div class="h-full max-h-full overflow-y-auto">
+      <a
+        matRipple
+        *ngFor="let request of requests; let i = index"
+        class="card group block p-16 border-b border-gray-light hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue focus:border-transparent"
+        routerLinkActive="bg-blue-light"
+        [routerLink]="['requests', i + 1]">
+        <div class="grid gap-x-8">
+          <div>
+            <div class="text-graphite-light label-text uppercase mb-4">Aguardando • 2 Dias Atrás</div>
+            <div class="text-graphite base-text-bold truncate mb-8">Comprovante de Matrícula</div>
+            <div class="text-graphite-light mb-16">Previsão: 30/04/2023</div>
+            <div class="inline-flex items-center h-20 bg-gray-light rounded px-8">
+              <span class="label-text text-graphite-light">CEAG-IC</span>
+            </div>
+          </div>
+          <div class="flex flex-col justify-between items-center gap-y-16">
+            <div
+              matTooltip="Prioridade baixa"
+              matTooltipPosition="right"
+              class="flex items-center justify-center h-32 w-32 border border-gray-light group-hover:border-blue rounded-full">
+              <mat-icon svgIcon="flag" class="text-blue-light group-hover:text-blue icon-16" />
+            </div>
+
+            <div class="flex items-center justify-center h-40 w-40 bg-gray-light rounded-full">
+              <span class="text-graphite">AC</span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </aside>
+
+  <div class="h-full w-full">
+    <router-outlet />
+  </div>
+</div>
