@@ -105,26 +105,28 @@ export class RequestDialogComponent implements OnInit {
       type: this.requestType?.value,
       ...this.requestDataForm.getRawValue(),
     };
+
     iif(
       () =>
         this.showHint &&
         this.requestType?.value === RequestType.Question &&
-        (data.title.includes('prováveis') ||
-          data.title.includes('provavel') ||
-          data.title.includes('provável') ||
-          data.title.includes('concluínte') ||
-          data.title.includes('concluente') ||
-          data.title.includes('concluíntes') ||
-          data.title.includes('concluentes') ||
-          data.title.includes('provaveis') ||
-          data.details.includes('prováveis') ||
-          data.details.includes('concluíntes') ||
-          data.details.includes('concluentes') ||
-          data.details.includes('provavel') ||
-          data.details.includes('provável') ||
-          data.details.includes('concluínte') ||
-          data.details.includes('concluente') ||
-          data.details.includes('provaveis')),
+        (data.title.toLowerCase().includes('prováveis') ||
+          data.title.toLowerCase().includes('provavel') ||
+          data.title.toLowerCase().includes('provável') ||
+          data.title.toLowerCase().includes('concluínte') ||
+          data.title.toLowerCase().includes('concluente') ||
+          data.title.toLowerCase().includes('concluíntes') ||
+          data.title.toLowerCase().includes('concluintes') ||
+          data.title.toLowerCase().includes('concluentes') ||
+          data.title.toLowerCase().includes('provaveis') ||
+          data.details.toLowerCase().includes('prováveis') ||
+          data.details.toLowerCase().includes('concluíntes') ||
+          data.details.toLowerCase().includes('concluentes') ||
+          data.details.toLowerCase().includes('provavel') ||
+          data.details.toLowerCase().includes('provável') ||
+          data.details.toLowerCase().includes('concluínte') ||
+          data.details.toLowerCase().includes('concluente') ||
+          data.details.toLowerCase().includes('provaveis')),
       of({}).pipe(
         delay(1500),
         tap(() => {
