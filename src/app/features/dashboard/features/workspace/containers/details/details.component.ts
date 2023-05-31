@@ -157,7 +157,7 @@ export class DetailsComponent implements OnInit {
       this.commentService.create(requestId, { value }).subscribe({
         next: comment => {
           this.loadingComment = false;
-          console.log(comment);
+          this.commentControl.reset();
           this.store.dispatch(fromDashboardActions.createCommentSuccess({ comment }));
         },
         error: () => {
