@@ -8,9 +8,18 @@ import { DialogEntryComponent } from './containers/dialog-entry/dialog-entry.com
 import { ThemeModule } from '../../../../@theme/theme.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from '../../../../shared/pipes/pipes.module';
+import { UploaderModule } from '../../../../shared/uploader/uploader.module';
 
 @NgModule({
   declarations: [RequestDialogComponent, DialogEntryComponent],
-  imports: [CommonModule, NewRequestRoutingModule, DialogModule, ReactiveFormsModule, ThemeModule, PipesModule],
+  imports: [
+    CommonModule,
+    NewRequestRoutingModule,
+    DialogModule,
+    ReactiveFormsModule,
+    ThemeModule,
+    PipesModule,
+    UploaderModule,
+  ],
 })
 export class NewRequestModule {}

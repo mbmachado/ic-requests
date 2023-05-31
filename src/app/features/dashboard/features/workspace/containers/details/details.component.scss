@@ -1,3 +1,11 @@
 .details-root {
   grid-template-rows: min-content minmax(0, 1fr);
+
+  .details-info {
+    grid-template-columns: minmax(0, 1fr) min-content;
+
+    .details-history {
+      grid-template-rows: min-content minmax(0, 1fr);
+    }
+  }
 }

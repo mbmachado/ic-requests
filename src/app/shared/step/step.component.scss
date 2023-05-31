@@ -1,0 +1,53 @@
+.progress-tab {
+  @apply relative flex h-40 overflow-hidden pt-0 pb-0 pr-16 pl-16;
+
+  .progress-tab-bg {
+    @apply absolute left-0 h-full w-full;
+
+    path:first-child {
+      fill: var(--white);
+    }
+
+    path:last-child {
+      fill: transparent;
+      fill-rule: evenodd;
+    }
+  }
+
+  .progress-tab-text {
+    @apply flex items-center h-full z-10 my-0 mx-auto;
+
+    span {
+      @apply text-center text-graphite-light;
+    }
+  }
+
+  &.active {
+    .progress-tab-bg path:last-child {
+      fill: var(--blue);
+    }
+
+    .progress-tab-bg path:first-child {
+      fill: var(--blue-light);
+    }
+
+    .progress-tab-text {
+      span {
+        @apply text-blue;
+      }
+    }
+  }
+
+  &.concluded {
+    .progress-tab-bg path:first-child {
+      fill: var(--blue);
+      filter: opacity(0.3);
+    }
+
+    .progress-tab-text {
+      span {
+        @apply text-white;
+      }
+    }
+  }
+}

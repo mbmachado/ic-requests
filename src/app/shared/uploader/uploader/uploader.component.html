@@ -1,0 +1,18 @@
+<icr-drop-area
+  text="Ou arraste e solte arquivos aqui (arquivos JPEG, PNG e PDF)."
+  [filesUnderUpload]="filesUnderUpload"
+  (fileChangeEvent)="fileChangeEvent($event)" />
+
+<div *ngIf="!!files?.length" class="mt-16">
+  <div
+    *ngFor="let file of files"
+    class="grid gap-16 border-b border-gray-light last:border-0 py-4"
+    style="grid-template-columns: min-content 1fr">
+    <div class="flex items-center justify-center bg-gray-light rounded-full h-40 w-40">
+      <mat-icon svgIcon="file-circle-check" class="icon-20 text-emerald" />
+    </div>
+    <div class="flex items-center">
+      <span class="block w-100 truncate">{{ file }}</span>
+    </div>
+  </div>
+</div>

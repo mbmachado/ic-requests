@@ -7,5 +7,6 @@ import { RequestTypePipe } from './request-type.pipe';
   declarations: [CoursePipe, RequestTypePipe],
   imports: [CommonModule],
   exports: [CoursePipe, RequestTypePipe],
+  providers: [CoursePipe, RequestTypePipe],
 })
 export class PipesModule {}

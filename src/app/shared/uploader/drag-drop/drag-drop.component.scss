@@ -1,0 +1,15 @@
+:host {
+  @apply block;
+}
+
+.file-drop-area {
+  @apply flex items-center justify-start flex-wrap border-dashed border-2 rounded-lg min-h-[150px] transition-all;
+
+  .file-under-upload {
+    @apply flex flex-col items-center justify-center w-[100px];
+
+    .file-name {
+      @apply w-full truncate text-center;
+    }
+  }
+}

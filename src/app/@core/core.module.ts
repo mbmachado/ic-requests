@@ -61,7 +61,7 @@ export class CoreModule {
         },
         {
           provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-          useValue: { duration: 500000, horizontalPosition: 'center', verticalPosition: 'top' },
+          useValue: { duration: 8000, horizontalPosition: 'center', verticalPosition: 'top' },
         },
       ],
     };

@@ -9,6 +9,10 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './containers/dashboard/dashboard.component';
 import { LogoComponent } from '../../shared/logo/logo.component';
 import { PipesModule } from '../../shared/pipes/pipes.module';
+import { StoreModule } from '@ngrx/store';
+import { dashboardKey, dashboardReducer } from './shared/state/dashboard/dashboard.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { DashboardEffects } from './shared/state/dashboard/dashboard.effects';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -16,6 +20,8 @@ import { PipesModule } from '../../shared/pipes/pipes.module';
     CommonModule,
     DashboardRoutingModule,
     ReactiveFormsModule,
+    StoreModule.forFeature(dashboardKey, dashboardReducer),
+    EffectsModule.forFeature([DashboardEffects]),
     LetModule,
     LogoComponent,
     ThemeModule,

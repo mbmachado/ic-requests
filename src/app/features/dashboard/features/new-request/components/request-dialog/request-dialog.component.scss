@@ -5,6 +5,10 @@
   div.modal-header {
     grid-template-columns: min-content minmax(0, 1fr);
   }
+
+  textarea {
+    @apply resize-none;
+  }
 }
 
 @keyframes dialog-enter {

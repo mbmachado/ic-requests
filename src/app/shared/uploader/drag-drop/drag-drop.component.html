@@ -1,0 +1,23 @@
+<div class="file-drop-area rounded w-100 p-8" icrDragDrop (fileDropped)="onFileDropped($event)">
+  <div *ngFor="let file of filesUnderUpload" class="file-under-upload border border-gray rounded p-8 m-8">
+    <div [ngSwitch]="file.status" class="mb-8 h-24 w-24">
+      <div *ngSwitchCase="0" class="relative spinner h-24 w-24"></div>
+
+      <mat-icon *ngSwitchCase="1" svgIcon="check" class="text-emerald" />
+      <mat-icon *ngSwitchCase="2" svgIcon="xmark" class="text-red" />
+    </div>
+    <small class="file-name" [title]="file.originalName">{{ file.originalName }}</small>
+  </div>
+
+  <div *ngIf="filesUnderUpload.length > 0" class="w-full p-0 border-t border-gray m-8"></div>
+
+  <div class="w-full p-8">
+    <input #fileInput class="hidden" type="file" accept="*" multiple (change)="onFileSelected($event)" />
+    <div class="flex items-center flex-col">
+      <button mat-button color="primary" (click)="fileInput.click()">
+        <mat-icon svgIcon="upload" />Selecione{{ filesUnderUpload.length > 0 ? ' outro' : '' }}
+      </button>
+      <small class="text-center p-8">{{ text }}</small>
+    </div>
+  </div>
+</div>

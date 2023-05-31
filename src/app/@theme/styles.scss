@@ -140,6 +140,10 @@ mat-icon {
   &.icon-20 {
     @apply w-20 h-20;
   }
+
+  &.icon-64 {
+    @apply w-64 h-64;
+  }
 }
 
 .fullscreen-dialog {

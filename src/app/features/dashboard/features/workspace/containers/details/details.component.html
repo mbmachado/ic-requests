@@ -1,15 +1,91 @@
 <div class="grid grid-cols-1 h-full w-full p-16 gap-y-16 details-root">
-  <div class="grid grid-cols-1 h-40">
-    <svg class="fill-blue" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M207.732 1H5C2.79086 1 1 2.79086 1 5V37C1 39.2091 2.79086 41 5 41H207.732C209.197 41 210.545 40.1994 211.245 38.913L219.958 22.913C220.608 21.7203 220.608 20.2797 219.958 19.087L211.245 3.08702C210.545 1.80062 209.197 1 207.732 1Z"
-        fill="none"
-        stroke="var(--blue)" />
-    </svg>
+  <div class="grid grid-rows-1 grid-cols-{{ steps.length }} gap-x-8 h-40">
+    <icr-step *ngFor="let step of steps" [stage]="step.stage" [status]="step.status" [text]="step.name" />
   </div>
-  <div class="bg-white rounded h-full">
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero numquam soluta aliquam tempore blanditiis iure
-    officia enim impedit mollitia eligendi corrupti, cupiditate quas aspernatur officiis est ea dolor deserunt
-    explicabo.
+  <div class="grid grid-rows-1 bg-white rounded h-full details-info">
+    <div class="grid details-history">
+      <div class="p-16">
+        <div class="flex items-start justify-between mb-16">
+          <div class="flex items-center gap-x-8">
+            <div class="large-text text-blue">Comprovante de Matrícula</div>
+            <div class="inline-flex items-center h-20 bg-yellow-light rounded px-8">
+              <span class="label-text text-yellow uppercase">Em espera</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-center w-40 h-40 bg-gray-light rounded-full">
+            <span class="base-text-bold">AC</span>
+          </div>
+        </div>
+
+        <div class="">
+          <label class="label-text text-graphite-light uppercase mb-4">Detalhes</label>
+          <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur aperiam, fugiat nesciunt, vel labore
+            facilis porro exercitationem amet aliquam odit et rerum hic quibusdam deserunt consectetur incidunt.
+          </div>
+        </div>
+      </div>
+      <div class="p-16 border-t border-gray h-full">
+        <div class="grid h-full gap-y-16" style="grid-template-rows: minmax(0, 1fr) min-content">
+          <div class="h-full">
+            <label class="label-text text-graphite-light uppercase mb-4">Histórico</label>
+          </div>
+          <div class="flex items-center gap-x-16">
+            <input
+              type="text"
+              class="flex-1 h-40 bg-white border border-gray-light w-full rounded pl-16 pr-48 py-8 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+              placeholder="Comentário" />
+            <button
+              class="h-40 rounded text-blue focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition">
+              <mat-icon svgIcon="paper-plane" class="icon-20" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-[240px] h-full border-l border-gray">
+      <div class="p-16">
+        <div class="label-text text-graphite-light uppercase mb-8">Solicitado por</div>
+        <div class="grid gap-16 mb-16" style="grid-template-columns: min-content minmax(0, 1fr)">
+          <div class="flex items-center justify-center h-40 w-40 bg-gray-light rounded-full">
+            <mat-icon svgIcon="user" class="icon-16 text-graphite-light" />
+          </div>
+          <div>Mateus Barbosa Machado</div>
+        </div>
+        <div class="grid grid-cols-2 gap-y-8">
+          <div class="col-span-2">
+            <label class="label-text text-graphite-light uppercase mb-4">E-mail</label>
+            <div>Normal</div>
+          </div>
+          <div class="col-span-2">
+            <label class="label-text text-graphite-light uppercase mb-4">Celular</label>
+            <div>(71) 99946-9402</div>
+          </div>
+          <div class="col-span-1">
+            <label class="label-text text-graphite-light uppercase mb-4">Matricula</label>
+            <div>216115522</div>
+          </div>
+          <div class="col-span-1">
+            <label class="label-text text-graphite-light uppercase mb-4">Curso</label>
+            <div>BCC</div>
+          </div>
+        </div>
+      </div>
+      <div class="p-16 border-t border-gray">
+        <div class="mb-8">
+          <label class="label-text text-graphite-light uppercase mb-4">Prioridade</label>
+          <div>Normal</div>
+        </div>
+        <div class="mb-8">
+          <label class="label-text text-graphite-light uppercase mb-4">Criado em</label>
+          <div>20/04/2023 às 13:46</div>
+        </div>
+        <div class="mb-8">
+          <label class="label-text text-graphite-light uppercase mb-4">Previsão</label>
+          <div>30/04/2023</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

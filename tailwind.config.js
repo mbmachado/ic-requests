@@ -1,6 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{html,ts}'],
+  safelist: [
+    {
+      pattern: /grid-cols-(1|2|3|4|5|6)/,
+    },
+  ],
   darkMode: ['class', '.dark-theme'],
   theme: {
     screens: {

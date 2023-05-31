@@ -1,11 +1,13 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { Observable, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import * as fromDashboardActions from '../../shared/state/dashboard/dashboard.actions';
+import * as fromDashboadSelectors from '../../shared/state/dashboard/dashboard.selectors';
 import * as fromUserContextSelectors from '../../../../@core/state/user-context/user-context.selectors';
 import * as fromUserContextActions from '../../../../@core/state/user-context/user-context.actions';
 import { User } from '../../../../@core/models/user.model';
@@ -22,10 +24,12 @@ interface MenuItem {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   public authUser$: Observable<Partial<User> | undefined>;
   public mobile$: Observable<boolean>;
   public isDarkTheme: boolean;
+
+  title$?: Observable<string>;
 
   public menuItems: MenuItem[] = [
     {
@@ -57,6 +61,11 @@ export class DashboardComponent {
     this.isDarkTheme =
       localStorage['theme'] === 'dark' ||
       (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }
+
+  ngOnInit(): void {
+    this.title$ = this.store.select(fromDashboadSelectors.selectTitle);
+    this.store.dispatch(fromDashboardActions.loadRequests());
   }
 
   onChangeTheme() {
@@ -100,7 +109,20 @@ export class DashboardComponent {
       'search',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/magnifying-glass-solid.svg')
     );
+    iconRegistry.addSvgIcon(
+      'paper-plane',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/paper-plane-solid.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'file-circle-check',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/file-circle-check-solid.svg')
+    );
 
+    iconRegistry.addSvgIcon('box-open', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/box-open-solid.svg'));
+    iconRegistry.addSvgIcon('upload', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/upload-solid.svg'));
+    iconRegistry.addSvgIcon('check', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/check-solid.svg'));
+    iconRegistry.addSvgIcon('xmark', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/xmark-solid.svg'));
+    iconRegistry.addSvgIcon('file', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/file-solid.svg'));
     iconRegistry.addSvgIcon('flag', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/flag-solid.svg'));
     iconRegistry.addSvgIcon('bars', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/bars-solid.svg'));
     iconRegistry.addSvgIcon('plus', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/plus-solid.svg'));

@@ -6,9 +6,11 @@ import { WorkspaceComponent } from './containers/workspace/workspace.component';
 import { ThemeModule } from '../../../../@theme/theme.module';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { DetailsComponent } from './containers/details/details.component';
+import { StepComponent } from '../../../../shared/step/step.component';
+import { LetModule } from '@ngrx/component';
 
 @NgModule({
   declarations: [WorkspaceComponent, WelcomeComponent, DetailsComponent],
-  imports: [CommonModule, WorkspaceRoutingModule, ThemeModule],
+  imports: [CommonModule, WorkspaceRoutingModule, LetModule, ThemeModule, StepComponent],
 })
 export class WorkspaceModule {}
