@@ -1,4 +1,5 @@
 import { BaseEntityModel } from './base/base-entity.model';
+import { Comment } from './comment.model';
 import { RequestType } from './enums/request-type.enum';
 import { User } from './user.model';
 

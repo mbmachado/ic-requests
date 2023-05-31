@@ -108,5 +108,20 @@ export const dashboardReducer = createReducer(
         loading: false,
       },
     })
+  ),
+  on(
+    fromDashboardActions.createCommentSuccess,
+    (state, { comment }): DashboardState => ({
+      ...state,
+      details: {
+        ...state.details,
+        request: {
+          ...state.details.request,
+          type: state.details!.request!.type,
+          title: state.details!.request!.title,
+          comments: [...(state.details?.request?.comments || []), comment],
+        },
+      },
+    })
   )
 );

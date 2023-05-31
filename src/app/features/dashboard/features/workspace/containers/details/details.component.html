@@ -35,14 +35,41 @@
             <div class="grid h-full gap-y-16" style="grid-template-rows: minmax(0, 1fr) min-content">
               <div class="h-full">
                 <label class="label-text text-graphite-light uppercase mb-4">Histórico</label>
+
+                <div class="mt-16">
+                  <div
+                    *ngFor="let comment of request?.comments"
+                    class="grid mt-16 gap-x-16"
+                    style="grid-template-columns: min-content 1fr">
+                    <div class="flex items-center justify-center h-40 w-40 bg-gray-light rounded-full">
+                      <mat-icon svgIcon="user" class="icon-16 text-graphite-light" />
+                    </div>
+                    <div>
+                      <div class="flex justify-between">
+                        <div>{{ comment.user?.name }}</div>
+                        <div class="label-text text-graphite-light uppercase">
+                          {{ comment.created_at | date : 'dd/MM/yyyy HH:mm' }}
+                        </div>
+                      </div>
+                      {{ comment.value }}
+                    </div>
+                  </div>
+                  <div *ngIf="!request?.comments?.length">
+                    <div class="text-center text-graphite-light mt-16">Sem comentários</div>
+                  </div>
+                </div>
               </div>
               <div class="flex items-center gap-x-16">
                 <input
                   type="text"
+                  [formControl]="commentControl"
                   class="flex-1 h-40 bg-white border border-gray-light w-full rounded pl-16 pr-48 py-8 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
                   placeholder="Comentário" />
                 <button
-                  class="h-40 rounded text-blue focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition">
+                  class="h-40 rounded relative text-blue focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition"
+                  (click)="addComment(request?.id!)"
+                  [disabled]="loadingComment"
+                  [class.spinner]="loadingComment">
                   <mat-icon svgIcon="paper-plane" class="icon-20" />
                 </button>
               </div>

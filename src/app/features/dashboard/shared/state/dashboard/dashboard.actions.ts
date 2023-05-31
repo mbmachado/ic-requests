@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { _Request } from '../../../../../@core/models/request.model';
+import { Comment } from '../../../../../@core/models/comment.model';
 
 export const setTitle = createAction('[Dashboard Page] Set Title', props<{ title: string }>());
 
@@ -23,3 +24,8 @@ export const createRequestSuccess = createAction(
   props<{ request: _Request }>()
 );
 export const createRequestFailure = createAction('[IC-Requests API] Create Request Failure');
+
+export const createCommentSuccess = createAction(
+  '[IC-Requests API] Create Comment Success',
+  props<{ comment: Comment }>()
+);

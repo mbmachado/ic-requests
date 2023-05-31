@@ -10,8 +10,17 @@ import { StepComponent } from '../../../../shared/step/step.component';
 import { LetModule } from '@ngrx/component';
 import { PipesModule } from '../../../../shared/pipes/pipes.module';
 
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [WorkspaceComponent, WelcomeComponent, DetailsComponent],
-  imports: [CommonModule, WorkspaceRoutingModule, LetModule, ThemeModule, PipesModule, StepComponent],
+  imports: [
+    CommonModule,
+    WorkspaceRoutingModule,
+    ReactiveFormsModule,
+    LetModule,
+    ThemeModule,
+    PipesModule,
+    StepComponent,
+  ],
 })
 export class WorkspaceModule {}
