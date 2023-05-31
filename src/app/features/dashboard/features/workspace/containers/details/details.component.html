@@ -1,91 +1,98 @@
-<div class="grid grid-cols-1 h-full w-full p-16 gap-y-16 details-root">
-  <div class="grid grid-rows-1 grid-cols-{{ steps.length }} gap-x-8 h-40">
-    <icr-step *ngFor="let step of steps" [stage]="step.stage" [status]="step.status" [text]="step.name" />
+<ng-container *ngrxLet="loading$ as loading">
+  <div *ngIf="loading" class="flex flex-col items-center justify-center h-full">
+    <div class="text-center text-graphite-light mt-8">Carregando...</div>
   </div>
-  <div class="grid grid-rows-1 bg-white rounded h-full details-info">
-    <div class="grid details-history">
-      <div class="p-16">
-        <div class="flex items-start justify-between mb-16">
-          <div class="flex items-center gap-x-8">
-            <div class="large-text text-blue">Comprovante de Matrícula</div>
-            <div class="inline-flex items-center h-20 bg-yellow-light rounded px-8">
-              <span class="label-text text-yellow uppercase">Em espera</span>
+
+  <ng-container *ngrxLet="request$ as request">
+    <div *ngIf="!loading" class="grid grid-cols-1 h-full w-full p-16 gap-y-16 details-root">
+      <div class="grid grid-rows-1 grid-cols-{{ steps.length }} gap-x-8 h-40">
+        <icr-step *ngFor="let step of steps" [stage]="step.stage" [status]="step.status" [text]="step.name" />
+      </div>
+      <div class="grid grid-rows-1 bg-white rounded h-full details-info">
+        <div class="grid details-history">
+          <div class="p-16">
+            <div class="flex items-start justify-between mb-16">
+              <div class="flex items-center gap-x-8">
+                <div class="large-text text-blue">{{ request?.title }}</div>
+                <div class="inline-flex items-center h-20 bg-yellow-light rounded px-8">
+                  <span class="label-text text-yellow uppercase">Em espera</span>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-center w-40 h-40 bg-gray-light rounded-full">
+                <span class="base-text-bold">AC</span>
+              </div>
+            </div>
+
+            <div class="">
+              <label class="label-text text-graphite-light uppercase mb-4">Detalhes</label>
+              <div>
+                {{ request?.details || 'Sem detalhes disponível' }}
+              </div>
             </div>
           </div>
-
-          <div class="flex items-center justify-center w-40 h-40 bg-gray-light rounded-full">
-            <span class="base-text-bold">AC</span>
+          <div class="p-16 border-t border-gray h-full">
+            <div class="grid h-full gap-y-16" style="grid-template-rows: minmax(0, 1fr) min-content">
+              <div class="h-full">
+                <label class="label-text text-graphite-light uppercase mb-4">Histórico</label>
+              </div>
+              <div class="flex items-center gap-x-16">
+                <input
+                  type="text"
+                  class="flex-1 h-40 bg-white border border-gray-light w-full rounded pl-16 pr-48 py-8 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+                  placeholder="Comentário" />
+                <button
+                  class="h-40 rounded text-blue focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition">
+                  <mat-icon svgIcon="paper-plane" class="icon-20" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="">
-          <label class="label-text text-graphite-light uppercase mb-4">Detalhes</label>
-          <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur aperiam, fugiat nesciunt, vel labore
-            facilis porro exercitationem amet aliquam odit et rerum hic quibusdam deserunt consectetur incidunt.
+        <div class="w-[240px] h-full border-l border-gray">
+          <div class="p-16">
+            <div class="label-text text-graphite-light uppercase mb-8">Solicitado por</div>
+            <div class="grid gap-16 mb-16" style="grid-template-columns: min-content minmax(0, 1fr)">
+              <div class="flex items-center justify-center h-40 w-40 bg-gray-light rounded-full">
+                <mat-icon svgIcon="user" class="icon-16 text-graphite-light" />
+              </div>
+              <div>{{ request?.user?.name }}</div>
+            </div>
+            <div class="grid grid-cols-2 gap-y-8">
+              <div class="col-span-2">
+                <label class="label-text text-graphite-light uppercase mb-4">E-mail</label>
+                <div>{{ request?.user?.email }}</div>
+              </div>
+              <div class="col-span-2">
+                <label class="label-text text-graphite-light uppercase mb-4">Celular</label>
+                <div>{{ request?.user?.cellphone || 'Não disponível' }}</div>
+              </div>
+              <div class="col-span-1">
+                <label class="label-text text-graphite-light uppercase mb-4">Matricula</label>
+                <div>{{ request?.user?.enrollment_number }}</div>
+              </div>
+              <div class="col-span-1">
+                <label class="label-text text-graphite-light uppercase mb-4">Curso</label>
+                <div class="truncate">{{ request?.user?.course | course }}</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="p-16 border-t border-gray h-full">
-        <div class="grid h-full gap-y-16" style="grid-template-rows: minmax(0, 1fr) min-content">
-          <div class="h-full">
-            <label class="label-text text-graphite-light uppercase mb-4">Histórico</label>
+          <div class="p-16 border-t border-gray">
+            <div class="mb-8">
+              <label class="label-text text-graphite-light uppercase mb-4">Prioridade</label>
+              <div>Normal</div>
+            </div>
+            <div class="mb-8">
+              <label class="label-text text-graphite-light uppercase mb-4">Criado em</label>
+              <div>{{ request?.created_at | date }}</div>
+            </div>
+            <div class="mb-8">
+              <label class="label-text text-graphite-light uppercase mb-4">Previsão</label>
+              <div>02/06/2023</div>
+            </div>
           </div>
-          <div class="flex items-center gap-x-16">
-            <input
-              type="text"
-              class="flex-1 h-40 bg-white border border-gray-light w-full rounded pl-16 pr-48 py-8 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
-              placeholder="Comentário" />
-            <button
-              class="h-40 rounded text-blue focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition">
-              <mat-icon svgIcon="paper-plane" class="icon-20" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="w-[240px] h-full border-l border-gray">
-      <div class="p-16">
-        <div class="label-text text-graphite-light uppercase mb-8">Solicitado por</div>
-        <div class="grid gap-16 mb-16" style="grid-template-columns: min-content minmax(0, 1fr)">
-          <div class="flex items-center justify-center h-40 w-40 bg-gray-light rounded-full">
-            <mat-icon svgIcon="user" class="icon-16 text-graphite-light" />
-          </div>
-          <div>Mateus Barbosa Machado</div>
-        </div>
-        <div class="grid grid-cols-2 gap-y-8">
-          <div class="col-span-2">
-            <label class="label-text text-graphite-light uppercase mb-4">E-mail</label>
-            <div>Normal</div>
-          </div>
-          <div class="col-span-2">
-            <label class="label-text text-graphite-light uppercase mb-4">Celular</label>
-            <div>(71) 99946-9402</div>
-          </div>
-          <div class="col-span-1">
-            <label class="label-text text-graphite-light uppercase mb-4">Matricula</label>
-            <div>216115522</div>
-          </div>
-          <div class="col-span-1">
-            <label class="label-text text-graphite-light uppercase mb-4">Curso</label>
-            <div>BCC</div>
-          </div>
-        </div>
-      </div>
-      <div class="p-16 border-t border-gray">
-        <div class="mb-8">
-          <label class="label-text text-graphite-light uppercase mb-4">Prioridade</label>
-          <div>Normal</div>
-        </div>
-        <div class="mb-8">
-          <label class="label-text text-graphite-light uppercase mb-4">Criado em</label>
-          <div>20/04/2023 às 13:46</div>
-        </div>
-        <div class="mb-8">
-          <label class="label-text text-graphite-light uppercase mb-4">Previsão</label>
-          <div>30/04/2023</div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </ng-container>
+</ng-container>

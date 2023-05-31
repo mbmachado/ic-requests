@@ -1,19 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StepStage } from '../../../../../../@core/models/enums/step-stage.enum';
 import { StepStatus } from '../../../../../../@core/models/enums/step-status.enum';
+import { Store } from '@ngrx/store';
+import { ActivatedRoute } from '@angular/router';
 
+import * as fromDashboardActions from '../../../../shared/state/dashboard/dashboard.actions';
+import * as fromDashboardSelectors from '../../../../shared/state/dashboard/dashboard.selectors';
+import { Observable, tap } from 'rxjs';
+import { _Request } from '../../../../../../@core/models/request.model';
+import { RequestType } from '../../../../../../@core/models/enums/request-type.enum';
 @Component({
   selector: 'icr-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],
 })
-export class DetailsComponent {
-  steps = [
+export class DetailsComponent implements OnInit {
+  request$?: Observable<_Request | undefined>;
+  loading$?: Observable<boolean>;
+
+  private readonly inicialSteps = [
     {
       stage: StepStage.Initial,
       status: StepStatus.Active,
       name: 'Aguardando',
     },
+  ];
+
+  private readonly finalSteps = [
+    {
+      stage: StepStage.Final,
+      status: StepStatus.Inactive,
+      name: 'Finalizado',
+    },
+  ];
+
+  steps = [
+    ...this.inicialSteps,
     {
       stage: StepStage.Intermediate,
       status: StepStatus.Inactive,
@@ -24,10 +46,94 @@ export class DetailsComponent {
       status: StepStatus.Inactive,
       name: 'Assinar',
     },
-    {
-      stage: StepStage.Final,
-      status: StepStatus.Inactive,
-      name: 'Finalizado',
-    },
+    ...this.finalSteps,
   ];
+
+  constructor(private store: Store, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.store.dispatch(fromDashboardActions.loadRequest({ id: +params.get('id')! }));
+    });
+
+    this.request$ = this.store.select(fromDashboardSelectors.selectRequest).pipe(
+      tap(request => {
+        if (request) {
+          switch (request.type) {
+            case RequestType.WorkloadClaim:
+              this.steps = [
+                ...this.inicialSteps,
+                {
+                  stage: StepStage.Intermediate,
+                  status: StepStatus.Inactive,
+                  name: 'Analisar',
+                },
+                {
+                  stage: StepStage.Intermediate,
+                  status: StepStatus.Inactive,
+                  name: 'Cadastrar',
+                },
+                ...this.finalSteps,
+              ];
+              break;
+            case RequestType.InternshipTermSigning:
+              this.steps = [
+                {
+                  stage: StepStage.Initial,
+                  status: StepStatus.Active,
+                  name: 'Aguardando',
+                },
+                {
+                  stage: StepStage.Intermediate,
+                  status: StepStatus.Inactive,
+                  name: 'Assinar',
+                },
+                {
+                  stage: StepStage.Final,
+                  status: StepStatus.Inactive,
+                  name: 'Finalizado',
+                },
+              ];
+              break;
+            case RequestType.Question:
+              this.steps = [
+                {
+                  stage: StepStage.Initial,
+                  status: StepStatus.Concluded,
+                  name: 'Aguardando',
+                },
+                {
+                  stage: StepStage.Intermediate,
+                  status: StepStatus.Active,
+                  name: 'Atendimento',
+                },
+                {
+                  stage: StepStage.Final,
+                  status: StepStatus.Inactive,
+                  name: 'Finalizado',
+                },
+              ];
+              break;
+            case RequestType.EnrollmentProof:
+              this.steps = [
+                ...this.inicialSteps,
+                {
+                  stage: StepStage.Intermediate,
+                  status: StepStatus.Inactive,
+                  name: 'Gerar Documento',
+                },
+                {
+                  stage: StepStage.Intermediate,
+                  status: StepStatus.Inactive,
+                  name: 'Assinar',
+                },
+                ...this.finalSteps,
+              ];
+              break;
+          }
+        }
+      })
+    );
+    this.loading$ = this.store.select(fromDashboardSelectors.selectRequestLoading);
+  }
 }

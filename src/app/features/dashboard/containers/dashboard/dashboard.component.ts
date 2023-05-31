@@ -117,6 +117,10 @@ export class DashboardComponent implements OnInit {
       'file-circle-check',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/file-circle-check-solid.svg')
     );
+    iconRegistry.addSvgIcon(
+      'magical-wand',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/wand-magic-sparkles-solid.svg')
+    );
 
     iconRegistry.addSvgIcon('box-open', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/box-open-solid.svg'));
     iconRegistry.addSvgIcon('upload', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/upload-solid.svg'));

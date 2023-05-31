@@ -8,9 +8,10 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { DetailsComponent } from './containers/details/details.component';
 import { StepComponent } from '../../../../shared/step/step.component';
 import { LetModule } from '@ngrx/component';
+import { PipesModule } from '../../../../shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [WorkspaceComponent, WelcomeComponent, DetailsComponent],
-  imports: [CommonModule, WorkspaceRoutingModule, LetModule, ThemeModule, StepComponent],
+  imports: [CommonModule, WorkspaceRoutingModule, LetModule, ThemeModule, PipesModule, StepComponent],
 })
 export class WorkspaceModule {}

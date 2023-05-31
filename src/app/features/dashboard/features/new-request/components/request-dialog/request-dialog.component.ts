@@ -8,6 +8,11 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { RequestTypePipe } from '../../../../../../shared/pipes/request-type.pipe';
 import { RequestService } from '../../../../../../@core/services/data/request.service';
 import { ToastrService } from '../../../../../../@core/services/misc/toastr.service';
+import { _Request } from '../../../../../../@core/models/request.model';
+import { Store } from '@ngrx/store';
+import * as fromDashboardActions from '../../../../shared/state/dashboard/dashboard.actions';
+
+import { delay, iif, of, tap } from 'rxjs';
 
 interface RequestTypeForm {
   requestType: FormControl<RequestType>;
@@ -29,6 +34,8 @@ export class RequestDialogComponent implements OnInit {
   @ViewChild('stepper', { static: true }) stepper?: MatStepper;
 
   loading = false;
+  showHint = true;
+  showHintPanel = false;
 
   requestTypeForm: FormGroup<RequestTypeForm>;
   requestDataForm: FormGroup<RequestDataForm>;
@@ -41,7 +48,8 @@ export class RequestDialogComponent implements OnInit {
     private requestTypeFormatter: RequestTypePipe,
     private formBuilder: FormBuilder,
     private requestService: RequestService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private store: Store
   ) {
     this.requestTypeForm = this.formBuilder.nonNullable.group({
       requestType: [RequestType.EnrollmentProof, [Validators.required]],
@@ -60,7 +68,9 @@ export class RequestDialogComponent implements OnInit {
         return;
       }
 
-      this.requestDataForm.get('title')?.setValue(this.requestTypeFormatter.transform(requestType));
+      this.requestDataForm
+        .get('title')
+        ?.setValue(requestType === RequestType.Question ? '' : this.requestTypeFormatter.transform(requestType));
     });
 
     const requestType = new URLSearchParams(window.location.search).get('type') as unknown as RequestType;
@@ -89,29 +99,62 @@ export class RequestDialogComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    this.requestService
-      .create({
-        type: this.requestType?.value,
-        ...this.requestDataForm.getRawValue(),
-      })
-      .subscribe({
-        next: () => {
+    this.showHintPanel = false;
+
+    const data = {
+      type: this.requestType?.value,
+      ...this.requestDataForm.getRawValue(),
+    };
+    iif(
+      () =>
+        this.showHint &&
+        this.requestType?.value === RequestType.Question &&
+        (data.title.includes('prováveis') ||
+          data.title.includes('provavel') ||
+          data.title.includes('provável') ||
+          data.title.includes('concluínte') ||
+          data.title.includes('concluente') ||
+          data.title.includes('concluíntes') ||
+          data.title.includes('concluentes') ||
+          data.title.includes('provaveis') ||
+          data.details.includes('prováveis') ||
+          data.details.includes('concluíntes') ||
+          data.details.includes('concluentes') ||
+          data.details.includes('provavel') ||
+          data.details.includes('provável') ||
+          data.details.includes('concluínte') ||
+          data.details.includes('concluente') ||
+          data.details.includes('provaveis')),
+      of({}).pipe(
+        delay(1500),
+        tap(() => {
+          this.showHint = false;
+          this.showHintPanel = true;
           this.loading = false;
-          this.toastrService.success('Solicitação criada com sucesso!');
-          this.dialogRef.close();
-        },
-        error: (error: Error) => {
-          this.loading = false;
-          this.toastrService.error(error.message);
-        },
-      });
+        })
+      ),
+      this.requestService.create(data).pipe(
+        tap({
+          next: (request: _Request) => {
+            this.loading = false;
+            this.toastrService.success('Solicitação criada com sucesso!');
+            this.store.dispatch(fromDashboardActions.createRequestSuccess({ request }));
+            this.dialogRef.close();
+          },
+          error: (error: Error) => {
+            this.loading = false;
+            this.toastrService.error(error.message);
+          },
+        })
+      )
+    ).subscribe();
   }
 
   onClose() {
     this.dialogRef.close();
   }
 
-  getDeatilsPlaceholder(): string {
+  getDetailsPlaceholder(): string {
     switch (this.requestType?.value) {
       case RequestType.EnrollmentProof:
         return 'Observações sobre o pedido de compravante de matrícula';

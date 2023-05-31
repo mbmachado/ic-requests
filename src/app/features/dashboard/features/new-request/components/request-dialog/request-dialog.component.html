@@ -92,7 +92,7 @@
               formControlName="details"
               id="new-request--input--details"
               type="text"
-              [placeholder]="getDeatilsPlaceholder()"
+              [placeholder]="getDetailsPlaceholder()"
               rows="5"></textarea>
             <mat-error *ngIf="details?.invalid"> Detalhes é obrigatório </mat-error>
           </mat-form-field>
@@ -104,6 +104,25 @@
             "
             class="mb-16">
             <icr-uploader formControlName="attachments" />
+          </div>
+
+          <div *ngIf="showHintPanel" class="bg-blue-light text-blue w-full rounded-lg mb-16 p-16">
+            <div class="flex items-center gap-8 mb-8">
+              <mat-icon svgIcon="magical-wand" class="icon-20" />
+              <div class="large-text">Deu match!</div>
+            </div>
+            <p class="mb-24">Encontramos uma pergunta parecida com a sua que já foi respondida. Dê uma olhada!</p>
+
+            <div class="text-graphite mb-24">
+              <label class="label-text uppercase">Pergunta </label>
+              <p class="mb-8 font-bold">Já houve alguma chamada de prováveis concluintes para esse semestre?</p>
+              <p class="mb-8">
+                De Coordenador: "ainda não [...], favor aguardar mais um pouco que muito em breve vou enviar um email"
+                em 28/05/2023.
+              </p>
+            </div>
+
+            Caso a resposta não tenha sido satisfatória, você pode continuar com a sua solicitação.
           </div>
 
           <button mat-flat-button color="primary" [disabled]="loading" [class.spinner]="loading" (click)="onSubmit()">

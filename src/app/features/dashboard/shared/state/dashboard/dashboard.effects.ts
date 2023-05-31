@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { exhaustMap, map, catchError, tap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { exhaustMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 import * as fromDashboardActions from './dashboard.actions';
@@ -25,6 +24,26 @@ export class DashboardEffects {
             this.toastr.error(error.message);
 
             return of(fromDashboardActions.loadRequestsFailure());
+          })
+        );
+      })
+    );
+  });
+
+  loadRequest$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromDashboardActions.loadRequest),
+      exhaustMap(({ id }) => {
+        return this.requestService.getById(id).pipe(
+          map(request => {
+            return fromDashboardActions.loadRequestSuccess({
+              request,
+            });
+          }),
+          catchError((error: Error) => {
+            this.toastr.error(error.message);
+
+            return of(fromDashboardActions.loadRequestFailure());
           })
         );
       })

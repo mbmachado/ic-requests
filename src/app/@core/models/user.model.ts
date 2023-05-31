@@ -8,7 +8,7 @@ export interface User extends BaseEntityModel {
   email: string;
   password?: string;
   course?: Course;
-  enrollmentNumber?: string;
+  enrollment_number?: string;
   cellphone?: string;
   role: Role;
   type: Type;

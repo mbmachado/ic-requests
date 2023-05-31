@@ -9,6 +9,10 @@ export interface DashboardState {
   loading: boolean;
   requests: _Request[];
   title: string;
+  details: {
+    request?: _Request;
+    loading: boolean;
+  };
 }
 
 const dashboardInitialState: DashboardState = {
@@ -16,6 +20,10 @@ const dashboardInitialState: DashboardState = {
   loading: false,
   requests: [],
   title: 'Início',
+  details: {
+    request: undefined,
+    loading: false,
+  },
 };
 
 export const dashboardReducer = createReducer(
@@ -78,6 +86,27 @@ export const dashboardReducer = createReducer(
       ...state,
       error: true,
       loading: false,
+    })
+  ),
+
+  on(
+    fromDashboardActions.loadRequest,
+    (state): DashboardState => ({
+      ...state,
+      details: {
+        ...state.details,
+        loading: true,
+      },
+    })
+  ),
+  on(
+    fromDashboardActions.loadRequestSuccess,
+    (state, { request }): DashboardState => ({
+      ...state,
+      details: {
+        request,
+        loading: false,
+      },
     })
   )
 );

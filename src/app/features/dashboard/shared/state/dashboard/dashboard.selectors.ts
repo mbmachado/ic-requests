@@ -10,3 +10,7 @@ export const selectRequests = createSelector(selectDashboard, state => state.req
 export const selectLoading = createSelector(selectDashboard, state => state.loading);
 
 export const selectError = createSelector(selectDashboard, state => state.error);
+
+export const selectRequest = createSelector(selectDashboard, state => state.details.request);
+
+export const selectRequestLoading = createSelector(selectDashboard, state => state.details.loading);
