@@ -3,7 +3,7 @@ import { StepStage } from '../../../../../../@core/models/enums/step-stage.enum'
 import { StepStatus } from '../../../../../../@core/models/enums/step-status.enum';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import * as fromDashboardActions from '../../../../shared/state/dashboard/dashboard.actions';
 import * as fromDashboardSelectors from '../../../../shared/state/dashboard/dashboard.selectors';
@@ -12,6 +12,10 @@ import { _Request } from '../../../../../../@core/models/request.model';
 import { RequestType } from '../../../../../../@core/models/enums/request-type.enum';
 import { CommentService } from '../../../../../../@core/services/data/comment.service';
 import { ToastrService } from '../../../../../../@core/services/misc/toastr.service';
+
+interface CommentForm {
+  comment: FormControl<string | null>;
+}
 @Component({
   selector: 'icr-details',
   templateUrl: './details.component.html',
@@ -23,7 +27,7 @@ export class DetailsComponent implements OnInit {
 
   loadingComment = false;
 
-  commentControl = new FormControl('', [Validators.required]);
+  form: FormGroup<CommentForm>;
 
   private readonly inicialSteps = [
     {
@@ -61,7 +65,11 @@ export class DetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private commentService: CommentService,
     private toastr: ToastrService
-  ) {}
+  ) {
+    this.form = new FormGroup({
+      comment: new FormControl('', [Validators.required]),
+    });
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -150,14 +158,14 @@ export class DetailsComponent implements OnInit {
   }
 
   addComment(requestId: number) {
-    const value = this.commentControl.value;
+    const value = this.form.value.comment;
 
     if (value) {
       this.loadingComment = true;
       this.commentService.create(requestId, { value }).subscribe({
         next: comment => {
           this.loadingComment = false;
-          this.commentControl.reset();
+          this.form.reset({ comment: '' });
           this.store.dispatch(fromDashboardActions.createCommentSuccess({ comment }));
         },
         error: () => {

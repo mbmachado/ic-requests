@@ -1,135 +1,122 @@
-<div class="flex items-center h-64 bg-white mb-24">
-  <div class="flex items-center justify-center w-64 h-full border-r border-gray">
-    <button mat-icon-button color="primary" aria-label="Voltar" (click)="onClose()">
-      <mat-icon svgIcon="angle-left" />
-    </button>
-  </div>
+<div class="grid grid-rows-min/1 h-full">
+  <icr-dialog-toolbar (closeDialog)="onClose()" />
 
-  <div class="px-16">
-    <div class="inline-grid grid-rows-1 gap-16 modal-header">
-      <div class="flex items-center text-blue h-full">
-        <mat-icon svgIcon="file-circle-check"></mat-icon>
-      </div>
-      <div class="text-left">
-        <div class="base-text-bold text-blue uppercase">Nova solicitação</div>
-        <div class="label text-graphite-light truncate">Crie uma solitação para ser enviada ao IC-UFBA</div>
-      </div>
+  <div class="block w-full h-full max-h-full py-24 overflow-y-auto">
+    <div class="block bg-white max-w-[600px] w-full rounded-none sm:rounded mx-auto overflow-hidden">
+      <mat-stepper orientation="vertical" #stepper>
+        <mat-step [stepControl]="requestTypeForm" errorMessage="Dados inválidos">
+          <form [formGroup]="requestTypeForm">
+            <ng-template matStepLabel>
+              {{ !stepper.selectedIndex ? 'Tipo da Solicitação' : (requestType?.value | requestType) }}
+            </ng-template>
+
+            <div class="mt-24">
+              <label for="new-request--input--request-type" class="block mb-4"
+                >Solicitação <span class="text-red">*</span></label
+              >
+              <mat-form-field class="w-full">
+                <mat-select id="new-request--input--request-type" formControlName="requestType">
+                  <mat-option *ngFor="let requestType of requestTypes" [value]="requestType">
+                    {{ requestType | requestType }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="requestType?.invalid">Solicitação é obrigatório</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <button mat-flat-button color="primary" matStepperNext>Avançar</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="requestDataForm" errorMessage="Dados inválidos">
+          <form [formGroup]="requestDataForm">
+            <ng-template matStepLabel>Preencha as informações</ng-template>
+
+            <div class="mt-24">
+              <ng-container *ngIf="requestType?.value === requestTypeEnum.WorkloadClaim">
+                <div class="bg-gray-light px-8 py-4 mb-4 rounded">
+                  Acesse as arientações para alunos do BCC
+                  <a href="https://bcc.ufba.br/atividades-complementares" target="_blank">aqui</a>.
+                </div>
+                <div class="bg-gray-light px-8 py-4 mb-4 rounded">
+                  Orientações para alunos do BSI
+                  <a href="  https://bsi.ufba.br/atividades-complementares" target="_blank">aqui</a>.
+                </div>
+                <div class="bg-gray-light px-8 py-4 mb-16 rounded">
+                  Para alunos da LC, orientações
+                  <a href="https://drive.google.com/file/d/1m2opI3Zmo6Q1In-whek-tiImpglqP09D/view" target="_blank"
+                    >aqui</a
+                  >.
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="requestType?.value === requestTypeEnum.Question">
+                <label for="new-request--input--title" class="block mb-4">Título / Pergunta</label>
+                <mat-form-field class="w-full">
+                  <input
+                    matInput
+                    formControlName="title"
+                    id="new-request--input--title"
+                    type="text"
+                    placeholder="Qual o ... ?"
+                    autocomplete="off" />
+                  <mat-error *ngIf="title?.invalid"> Título é obrigatório </mat-error>
+                </mat-form-field>
+              </ng-container>
+
+              <label for="new-request--input--details" class="block mb-4">Detalhes</label>
+              <mat-form-field class="w-full">
+                <textarea
+                  matInput
+                  formControlName="details"
+                  id="new-request--input--details"
+                  type="text"
+                  [placeholder]="getDetailsPlaceholder()"
+                  rows="5"></textarea>
+                <mat-error *ngIf="details?.invalid"> Detalhes é obrigatório </mat-error>
+              </mat-form-field>
+
+              <div
+                *ngIf="
+                  requestType?.value === requestTypeEnum.WorkloadClaim ||
+                  requestType?.value === requestTypeEnum.InternshipTermSigning
+                "
+                class="mb-16">
+                <icr-uploader formControlName="attachments" />
+              </div>
+
+              <div *ngIf="showHintPanel" class="bg-blue-light text-blue w-full rounded-lg mb-16 p-16">
+                <div class="flex items-center gap-8 mb-8">
+                  <mat-icon svgIcon="magical-wand" class="icon-20" />
+                  <div class="large-text">Deu match!</div>
+                </div>
+                <p class="mb-24">Encontramos uma pergunta parecida com a sua que já foi respondida. Dê uma olhada!</p>
+
+                <div class="text-graphite mb-24">
+                  <label class="label-text uppercase">Pergunta </label>
+                  <p class="mb-8 font-bold">Já houve alguma chamada de prováveis concluintes para esse semestre?</p>
+                  <p class="mb-8">
+                    De Coordenador: "ainda não [...], favor aguardar mais um pouco que muito em breve vou enviar um
+                    email" em 28/05/2023.
+                  </p>
+                </div>
+
+                Caso a resposta não tenha sido satisfatória, você pode continuar com a sua solicitação.
+              </div>
+
+              <button
+                mat-flat-button
+                color="primary"
+                [disabled]="loading"
+                [class.spinner]="loading"
+                (click)="onSubmit()">
+                Enviar
+              </button>
+            </div>
+          </form>
+        </mat-step>
+      </mat-stepper>
     </div>
   </div>
-
-  <div class="flex-1"></div>
-
-  <div class="px-16">
-    <button mat-stroked-button color="warn" (click)="onClose()">Cancelar</button>
-  </div>
-</div>
-
-<div class="block bg-white max-w-[600px] w-full rounded-none sm:rounded mx-auto overflow-hidden">
-  <mat-stepper orientation="vertical" #stepper>
-    <mat-step [stepControl]="requestTypeForm" errorMessage="Dados inválidos">
-      <form [formGroup]="requestTypeForm">
-        <ng-template matStepLabel>
-          {{ !stepper.selectedIndex ? 'Tipo da Solicitação' : (requestType?.value | requestType) }}
-        </ng-template>
-
-        <div class="mt-24">
-          <label for="new-request--input--request-type" class="block mb-4"
-            >Solicitação <span class="text-red">*</span></label
-          >
-          <mat-form-field class="w-full">
-            <mat-select id="new-request--input--request-type" formControlName="requestType">
-              <mat-option *ngFor="let requestType of requestTypes" [value]="requestType">
-                {{ requestType | requestType }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="requestType?.invalid">Solicitação é obrigatório</mat-error>
-          </mat-form-field>
-        </div>
-
-        <div>
-          <button mat-flat-button color="primary" matStepperNext>Avançar</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="requestDataForm" errorMessage="Dados inválidos">
-      <form [formGroup]="requestDataForm">
-        <ng-template matStepLabel>Preencha as informações</ng-template>
-
-        <div class="mt-24">
-          <ng-container *ngIf="requestType?.value === requestTypeEnum.WorkloadClaim">
-            <div class="bg-gray-light px-8 py-4 mb-4 rounded">
-              Acesse as arientações para alunos do BCC
-              <a href="https://bcc.ufba.br/atividades-complementares" target="_blank">aqui</a>.
-            </div>
-            <div class="bg-gray-light px-8 py-4 mb-4 rounded">
-              Orientações para alunos do BSI
-              <a href="  https://bsi.ufba.br/atividades-complementares" target="_blank">aqui</a>.
-            </div>
-            <div class="bg-gray-light px-8 py-4 mb-16 rounded">
-              Para alunos da LC, orientações
-              <a href="https://drive.google.com/file/d/1m2opI3Zmo6Q1In-whek-tiImpglqP09D/view" target="_blank">aqui</a>.
-            </div>
-          </ng-container>
-
-          <ng-container *ngIf="requestType?.value === requestTypeEnum.Question">
-            <label for="new-request--input--title" class="block mb-4">Título / Pergunta</label>
-            <mat-form-field class="w-full">
-              <input
-                matInput
-                formControlName="title"
-                id="new-request--input--title"
-                type="text"
-                placeholder="Qual o ... ?"
-                autocomplete="off" />
-              <mat-error *ngIf="title?.invalid"> Título é obrigatório </mat-error>
-            </mat-form-field>
-          </ng-container>
-
-          <label for="new-request--input--details" class="block mb-4">Detalhes</label>
-          <mat-form-field class="w-full">
-            <textarea
-              matInput
-              formControlName="details"
-              id="new-request--input--details"
-              type="text"
-              [placeholder]="getDetailsPlaceholder()"
-              rows="5"></textarea>
-            <mat-error *ngIf="details?.invalid"> Detalhes é obrigatório </mat-error>
-          </mat-form-field>
-
-          <div
-            *ngIf="
-              requestType?.value === requestTypeEnum.WorkloadClaim ||
-              requestType?.value === requestTypeEnum.InternshipTermSigning
-            "
-            class="mb-16">
-            <icr-uploader formControlName="attachments" />
-          </div>
-
-          <div *ngIf="showHintPanel" class="bg-blue-light text-blue w-full rounded-lg mb-16 p-16">
-            <div class="flex items-center gap-8 mb-8">
-              <mat-icon svgIcon="magical-wand" class="icon-20" />
-              <div class="large-text">Deu match!</div>
-            </div>
-            <p class="mb-24">Encontramos uma pergunta parecida com a sua que já foi respondida. Dê uma olhada!</p>
-
-            <div class="text-graphite mb-24">
-              <label class="label-text uppercase">Pergunta </label>
-              <p class="mb-8 font-bold">Já houve alguma chamada de prováveis concluintes para esse semestre?</p>
-              <p class="mb-8">
-                De Coordenador: "ainda não [...], favor aguardar mais um pouco que muito em breve vou enviar um email"
-                em 28/05/2023.
-              </p>
-            </div>
-
-            Caso a resposta não tenha sido satisfatória, você pode continuar com a sua solicitação.
-          </div>
-
-          <button mat-flat-button color="primary" [disabled]="loading" [class.spinner]="loading" (click)="onSubmit()">
-            Enviar
-          </button>
-        </div>
-      </form>
-    </mat-step>
-  </mat-stepper>
 </div>

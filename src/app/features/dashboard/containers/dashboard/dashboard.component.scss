@@ -8,10 +8,6 @@ mat-sidenav-container.root-dashboard {
 
   mat-sidenav-content {
     @apply bg-gray-light;
-
-    & > div {
-      grid-template-rows: min-content minmax(0, 1fr);
-    }
   }
 
   div.fab {
@@ -19,7 +15,12 @@ mat-sidenav-container.root-dashboard {
   }
 
   button.user-menu {
-    grid-template-columns: min-content minmax(0, 1fr) min-content;
-    grid-template-rows: 1fr;
+    grid-template-columns: repeat(2, min-content);
+  }
+
+  @screen sm {
+    button.user-menu {
+      grid-template-columns: min-content minmax(0, 1fr) min-content;
+    }
   }
 }

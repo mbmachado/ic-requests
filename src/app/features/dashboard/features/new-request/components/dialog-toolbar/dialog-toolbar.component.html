@@ -1,0 +1,25 @@
+<div class="flex items-center h-64 bg-white">
+  <div class="flex items-center justify-center w-64 h-full border-r border-gray">
+    <button mat-icon-button color="primary" aria-label="Voltar" (click)="onClose()">
+      <mat-icon svgIcon="angle-left" />
+    </button>
+  </div>
+
+  <div class="px-16">
+    <div class="inline-grid grid-rows-1 grid-cols-min/1 gap-16">
+      <div class="flex items-center text-blue h-full">
+        <mat-icon svgIcon="file-circle-check"></mat-icon>
+      </div>
+      <div class="text-left">
+        <div class="base-text-bold text-blue uppercase">Nova solicitação</div>
+        <div class="label text-graphite-light truncate">Crie uma solitação para ser enviada ao IC-UFBA</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-1"></div>
+
+  <div class="px-16">
+    <button mat-stroked-button color="warn" (click)="onClose()">Cancelar</button>
+  </div>
+</div>

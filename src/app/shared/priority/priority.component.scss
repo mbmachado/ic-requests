@@ -1,0 +1,13 @@
+:host {
+  & > div mat-icon {
+    @apply text-blue-light;
+  }
+
+  &[kind='low'] > div mat-icon {
+    @apply text-graphite-light;
+  }
+
+  &[kind='high'] > div mat-icon {
+    @apply text-red-light;
+  }
+}

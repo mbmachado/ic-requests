@@ -1,0 +1,57 @@
+:host {
+  & > div {
+    @apply bg-gray-light;
+
+    & span {
+      @apply text-graphite-light;
+    }
+  }
+
+  &[schema='blue'] > div {
+    @apply bg-blue-light;
+
+    & span {
+      @apply text-blue;
+    }
+  }
+
+  &[schema='green'] > div {
+    @apply bg-green-light;
+
+    & span {
+      @apply text-green;
+    }
+  }
+
+  &[schema='yellow'] > div {
+    @apply bg-yellow-light;
+
+    & span {
+      @apply text-yellow;
+    }
+  }
+
+  &[schema='red'] > div {
+    @apply bg-red-light;
+
+    & span {
+      @apply text-red;
+    }
+  }
+
+  &[schema='orange'] > div {
+    @apply bg-orange-light;
+
+    & span {
+      @apply text-orange;
+    }
+  }
+
+  &[schema='purple'] > div {
+    @apply bg-purple-light;
+
+    & span {
+      @apply text-purple;
+    }
+  }
+}

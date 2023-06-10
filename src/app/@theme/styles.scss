@@ -22,7 +22,7 @@
     --yellow: #{variables.$yellow};
     --yellow-light: #{variables.$yellow-light};
     --purple: #{variables.$purple};
-    --purple-ligth: #{variables.$purple-light};
+    --purple-light: #{variables.$purple-light};
     --gray: #{variables.$gray};
     --gray-light: #{variables.$gray-light};
     --graphite: #{variables.$graphite};
@@ -46,7 +46,7 @@
     --yellow: #{variables.$dth-yellow};
     --yellow-light: #{variables.$dth-yellow-light};
     --purple: #{variables.$dth-purple};
-    --purple-ligth: #{variables.$dth-purple-light};
+    --purple-light: #{variables.$dth-purple-light};
     --gray: #{variables.$dth-gray};
     --gray-light: #{variables.$dth-gray-light};
     --graphite: #{variables.$dth-graphite};
@@ -107,6 +107,24 @@
     to {
       transform: rotate(360deg);
     }
+  }
+}
+
+@layer utilities {
+  .grid-cols-min\/1 {
+    grid-template-columns: min-content minmax(0, 1fr);
+  }
+
+  .grid-cols-1\/min {
+    grid-template-columns: minmax(0, 1fr) min-content;
+  }
+
+  .grid-rows-min\/1 {
+    grid-template-rows: min-content minmax(0, 1fr);
+  }
+
+  .grid-rows-1\/min {
+    grid-template-rows: minmax(0, 1fr) min-content;
   }
 }
 

@@ -1,18 +1,18 @@
 import { DialogRef } from '@angular/cdk/dialog';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
-
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { RequestType } from '../../../../../../@core/models/enums/request-type.enum';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { RequestTypePipe } from '../../../../../../shared/pipes/request-type.pipe';
+
+import { Store } from '@ngrx/store';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { delay, iif, of, tap } from 'rxjs';
+
+import { RequestType } from '../../../../../../@core/models/enums/request-type.enum';
 import { RequestService } from '../../../../../../@core/services/data/request.service';
 import { ToastrService } from '../../../../../../@core/services/misc/toastr.service';
 import { _Request } from '../../../../../../@core/models/request.model';
-import { Store } from '@ngrx/store';
+import { RequestTypePipe } from '../../../../../../shared/pipes/request-type.pipe';
 import * as fromDashboardActions from '../../../../shared/state/dashboard/dashboard.actions';
-
-import { delay, iif, of, tap } from 'rxjs';
 
 interface RequestTypeForm {
   requestType: FormControl<RequestType>;

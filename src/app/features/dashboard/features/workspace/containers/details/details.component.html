@@ -14,64 +14,47 @@
             <div class="flex items-start justify-between mb-16">
               <div class="flex items-center gap-x-8">
                 <div class="large-text text-blue">{{ request?.title }}</div>
-                <div class="inline-flex items-center h-20 bg-yellow-light rounded px-8">
-                  <span class="label-text text-yellow uppercase">Em espera</span>
-                </div>
-              </div>
 
-              <div class="flex items-center justify-center w-40 h-40 bg-gray-light rounded-full">
-                <span class="base-text-bold">AC</span>
+                <icr-tag schema="yellow">Em espera</icr-tag>
               </div>
+              <icr-avatar name="Ana Cardoso" tooltipPosition="left" />
             </div>
 
-            <div class="">
+            <div class="block">
               <label class="label-text text-graphite-light uppercase mb-4">Detalhes</label>
               <div>
                 {{ request?.details || 'Sem detalhes disponível' }}
               </div>
             </div>
           </div>
-          <div class="p-16 border-t border-gray h-full">
-            <div class="grid h-full gap-y-16" style="grid-template-rows: minmax(0, 1fr) min-content">
-              <div class="h-full">
+          <div class="border-t border-gray h-full">
+            <div class="grid grid-rows-1/min h-full">
+              <div class="h-full p-16 overflow-y-auto">
                 <label class="label-text text-graphite-light uppercase mb-4">Histórico</label>
 
                 <div class="mt-16">
-                  <div
-                    *ngFor="let comment of request?.comments"
-                    class="grid mt-16 gap-x-16"
-                    style="grid-template-columns: min-content 1fr">
-                    <div class="flex items-center justify-center h-40 w-40 bg-gray-light rounded-full">
-                      <mat-icon svgIcon="user" class="icon-16 text-graphite-light" />
-                    </div>
-                    <div>
-                      <div class="flex justify-between">
-                        <div>{{ comment.user?.name }}</div>
-                        <div class="label-text text-graphite-light uppercase">
-                          {{ comment.created_at | date : 'dd/MM/yyyy HH:mm' }}
-                        </div>
-                      </div>
-                      {{ comment.value }}
-                    </div>
-                  </div>
+                  <icr-comment *ngFor="let comment of request?.comments" [comment]="comment" />
+
                   <div *ngIf="!request?.comments?.length">
                     <div class="text-center text-graphite-light mt-16">Sem comentários</div>
                   </div>
                 </div>
               </div>
-              <div class="flex items-center gap-x-16">
-                <input
-                  type="text"
-                  [formControl]="commentControl"
-                  class="flex-1 h-40 bg-white border border-gray-light w-full rounded pl-16 pr-48 py-8 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
-                  placeholder="Comentário" />
-                <button
-                  class="h-40 rounded relative text-blue focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition"
-                  (click)="addComment(request?.id!)"
-                  [disabled]="loadingComment"
-                  [class.spinner]="loadingComment">
-                  <mat-icon svgIcon="paper-plane" class="icon-20" />
-                </button>
+              <div class="p-16">
+                <form class="flex items-center gap-x-16" [formGroup]="form" (ngSubmit)="addComment(request?.id!)">
+                  <input
+                    type="text"
+                    formControlName="comment"
+                    class="flex-1 h-40 bg-white border border-gray-light w-full rounded pl-16 pr-48 py-8 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+                    placeholder="Comentário" />
+                  <button
+                    type="submit"
+                    class="h-40 rounded relative text-blue disabled:text-gray focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition"
+                    [disabled]="loadingComment"
+                    [class.spinner]="loadingComment">
+                    <mat-icon svgIcon="paper-plane" class="icon-20" />
+                  </button>
+                </form>
               </div>
             </div>
           </div>
@@ -79,10 +62,8 @@
         <div class="w-[240px] h-full border-l border-gray">
           <div class="p-16">
             <div class="label-text text-graphite-light uppercase mb-8">Solicitado por</div>
-            <div class="grid gap-16 mb-16" style="grid-template-columns: min-content minmax(0, 1fr)">
-              <div class="flex items-center justify-center h-40 w-40 bg-gray-light rounded-full">
-                <mat-icon svgIcon="user" class="icon-16 text-graphite-light" />
-              </div>
+            <div class="grid grid-cols-min/1 gap-16 mb-16">
+              <icr-avatar />
               <div>{{ request?.user?.name }}</div>
             </div>
             <div class="grid grid-cols-2 gap-y-8">

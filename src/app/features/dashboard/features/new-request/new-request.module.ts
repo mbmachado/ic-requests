@@ -9,9 +9,10 @@ import { ThemeModule } from '../../../../@theme/theme.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from '../../../../shared/pipes/pipes.module';
 import { UploaderModule } from '../../../../shared/uploader/uploader.module';
+import { DialogToolbarComponent } from './components/dialog-toolbar/dialog-toolbar.component';
 
 @NgModule({
-  declarations: [RequestDialogComponent, DialogEntryComponent],
+  declarations: [RequestDialogComponent, DialogEntryComponent, DialogToolbarComponent],
   imports: [
     CommonModule,
     NewRequestRoutingModule,

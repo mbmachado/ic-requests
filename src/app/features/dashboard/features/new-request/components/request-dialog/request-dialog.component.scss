@@ -2,10 +2,6 @@
   @apply block w-full h-full bg-gray-light;
   animation: dialog-enter 0.4s ease;
 
-  div.modal-header {
-    grid-template-columns: min-content minmax(0, 1fr);
-  }
-
   textarea {
     @apply resize-none;
   }

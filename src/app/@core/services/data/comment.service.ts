@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { Comment } from '../../models/comment.model';
 import { BaseService } from '../base/base.service';
+import { CommentDTO } from '../../models/dtos/comment.dto';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -12,7 +13,7 @@ export class CommentService extends BaseService {
     super();
   }
 
-  create(requestId: number, data: { value: string }): Observable<Comment> {
+  create(requestId: number, data: CommentDTO): Observable<Comment> {
     return this.http
       .post<Comment>(`${this.apiUrl}/requests/${requestId}/comments`, data)
       .pipe(catchError(this.handleError));

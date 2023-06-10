@@ -1,0 +1,11 @@
+<div
+  [matTooltip]="tooltipText"
+  [matTooltipPosition]="tooltipPosition"
+  [matTooltipDisabled]="tooltipDisabled"
+  class="flex items-center justify-center h-40 w-40 bg-gray-light rounded-full">
+  <span *ngIf="hasInitials; else userIconTlp" class="base-text-bold">{{ initials }}</span>
+
+  <ng-template #userIconTlp>
+    <mat-icon svgIcon="user" class="icon-16 text-graphite-light" />
+  </ng-template>
+</div>
