@@ -4,12 +4,12 @@
   </div>
 
   <ng-container *ngrxLet="request$ as request">
-    <div *ngIf="!loading" class="grid grid-cols-1 h-full w-full p-16 gap-y-16 details-root">
+    <div *ngIf="!loading" class="grid grid-cols-1 grid-rows-min/1 h-full w-full p-16 gap-y-16 details-root">
       <div class="grid grid-rows-1 grid-cols-{{ steps.length }} gap-x-8 h-40">
         <icr-step *ngFor="let step of steps" [stage]="step.stage" [status]="step.status" [text]="step.name" />
       </div>
-      <div class="grid grid-rows-1 bg-white rounded h-full details-info">
-        <div class="grid details-history">
+      <div class="grid grid-rows-1 grid-cols-1/min bg-white rounded h-full">
+        <div class="grid grid-rows-min/1 details-history">
           <div class="p-16">
             <div class="flex items-start justify-between mb-16">
               <div class="flex items-center gap-x-8">

@@ -1,17 +1,17 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
 
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 
+import { User } from '../../../../@core/models/user.model';
+import { RequestType } from '../../../../@core/models/enums/request-type.enum';
+import { Role } from '../../../../@core/models/enums/role.enum';
 import * as fromDashboardActions from '../../shared/state/dashboard/dashboard.actions';
 import * as fromDashboadSelectors from '../../shared/state/dashboard/dashboard.selectors';
 import * as fromUserContextSelectors from '../../../../@core/state/user-context/user-context.selectors';
 import * as fromUserContextActions from '../../../../@core/state/user-context/user-context.actions';
-import { User } from '../../../../@core/models/user.model';
-import { RequestType } from '../../../../@core/models/enums/request-type.enum';
 
 interface MenuItem {
   icon: string;
@@ -25,37 +25,18 @@ interface MenuItem {
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  public authUser$: Observable<Partial<User> | undefined>;
-  public mobile$: Observable<boolean>;
-  public isDarkTheme: boolean;
+  mobile$: Observable<boolean>;
+  title$!: Observable<string>;
 
-  title$?: Observable<string>;
+  user$!: Observable<Partial<User> | undefined>;
+  menuItems$!: Observable<MenuItem[]>;
 
-  public menuItems: MenuItem[] = [
-    {
-      icon: 'house-chimney',
-      label: 'Início',
-      link: '/dashboard/workspace',
-    },
-    {
-      icon: 'user',
-      label: 'Conta',
-      link: '/dashboard/profile',
-    },
-  ];
+  isDarkTheme: boolean;
 
   readonly requestType = RequestType;
+  readonly role = Role;
 
-  constructor(
-    breakpointObserver: BreakpointObserver,
-    iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer,
-    private store: Store
-  ) {
-    this.registerIcons(iconRegistry, sanitizer);
-
-    this.authUser$ = this.store.select(fromUserContextSelectors.selectAuthUser);
-
+  constructor(breakpointObserver: BreakpointObserver, private store: Store) {
     this.mobile$ = breakpointObserver.observe(['(max-width: 640px)']).pipe(map(result => result.matches));
 
     this.isDarkTheme =
@@ -65,10 +46,64 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.title$ = this.store.select(fromDashboadSelectors.selectTitle);
+    this.user$ = this.store.select(fromUserContextSelectors.selectUser);
+
+    this.menuItems$ = this.user$.pipe(
+      map(user => {
+        if (user?.role === Role.Admin) {
+          return [
+            {
+              icon: 'inbox',
+              label: 'Workspace',
+              link: '/dashboard/workspace',
+            },
+            {
+              icon: 'arrows-turn-to-dots',
+              label: 'Workflows',
+              link: '/dashboard/workflows',
+            },
+            {
+              icon: 'clipboard-list',
+              label: 'Solicitações',
+              link: '/dashboard/requests',
+            },
+            {
+              icon: 'users',
+              label: 'Usuários',
+              link: '/dashboard/profile',
+            },
+            {
+              icon: 'gear',
+              label: 'Configurações',
+              link: '/dashboard/profile',
+            },
+            {
+              icon: 'user',
+              label: 'Conta',
+              link: '/dashboard/profile',
+            },
+          ];
+        }
+
+        return [
+          {
+            icon: 'house-chimney',
+            label: 'Início',
+            link: '/dashboard/workspace',
+          },
+          {
+            icon: 'user',
+            label: 'Conta',
+            link: '/dashboard/profile',
+          },
+        ];
+      })
+    );
+
     this.store.dispatch(fromDashboardActions.loadRequests());
   }
 
-  onChangeTheme() {
+  onThemeChanged() {
     this.isDarkTheme = !this.isDarkTheme;
 
     if (this.isDarkTheme) {
@@ -82,57 +117,5 @@ export class DashboardComponent implements OnInit {
 
   onSignOut() {
     this.store.dispatch(fromUserContextActions.signOut());
-  }
-
-  private registerIcons(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon(
-      'house-chimney',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/house-chimney-solid.svg')
-    );
-    iconRegistry.addSvgIcon(
-      'caret-down',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/caret-down-solid.svg')
-    );
-    iconRegistry.addSvgIcon(
-      'right-from-bracket',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/right-from-bracket-solid.svg')
-    );
-    iconRegistry.addSvgIcon(
-      'angle-left',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/angle-left-solid.svg')
-    );
-    iconRegistry.addSvgIcon(
-      'file-circle-check',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/file-circle-check-solid.svg')
-    );
-    iconRegistry.addSvgIcon(
-      'search',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/magnifying-glass-solid.svg')
-    );
-    iconRegistry.addSvgIcon(
-      'paper-plane',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/paper-plane-solid.svg')
-    );
-    iconRegistry.addSvgIcon(
-      'file-circle-check',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/file-circle-check-solid.svg')
-    );
-    iconRegistry.addSvgIcon(
-      'magical-wand',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/wand-magic-sparkles-solid.svg')
-    );
-
-    iconRegistry.addSvgIcon('box-open', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/box-open-solid.svg'));
-    iconRegistry.addSvgIcon('upload', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/upload-solid.svg'));
-    iconRegistry.addSvgIcon('check', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/check-solid.svg'));
-    iconRegistry.addSvgIcon('xmark', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/xmark-solid.svg'));
-    iconRegistry.addSvgIcon('file', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/file-solid.svg'));
-    iconRegistry.addSvgIcon('flag', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/flag-solid.svg'));
-    iconRegistry.addSvgIcon('bars', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/bars-solid.svg'));
-    iconRegistry.addSvgIcon('plus', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/plus-solid.svg'));
-    iconRegistry.addSvgIcon('plus', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/plus-solid.svg'));
-    iconRegistry.addSvgIcon('user', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/user-solid.svg'));
-    iconRegistry.addSvgIcon('moon', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/moon-solid.svg'));
-    iconRegistry.addSvgIcon('sun', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/sun-solid.svg'));
   }
 }

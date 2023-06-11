@@ -2,8 +2,7 @@ mat-sidenav-container.root-dashboard {
   @apply absolute top-0 right-0 bottom-0 left-0;
 
   mat-sidenav {
-    @apply border-l border-gray-light dark:border-0;
-    width: 200px;
+    @apply border-r border-gray-light dark:border-0 w-[200px];
   }
 
   mat-sidenav-content {

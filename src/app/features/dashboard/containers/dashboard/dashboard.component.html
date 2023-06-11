@@ -1,108 +1,108 @@
 <ng-container *ngrxLet="mobile$ as mobile">
-  <mat-sidenav-container class="root-dashboard">
-    <mat-sidenav
-      #sidenav
-      fixedTopGap="0"
-      [opened]="!mobile"
-      [fixedInViewport]="mobile"
-      [attr.role]="mobile ? 'dialog' : 'navigation'"
-      [mode]="mobile ? 'over' : 'side'"
-      [autoFocus]="false">
-      <div class="flex flex-col border-t-4 border-blue py-16 w-full">
-        <icr-logo class="block mx-auto mb-24" />
+  <ng-container *ngrxLet="user$ as user">
+    <mat-sidenav-container class="root-dashboard">
+      <mat-sidenav
+        #sidenav
+        fixedTopGap="0"
+        [opened]="!mobile"
+        [fixedInViewport]="mobile"
+        [attr.role]="mobile ? 'dialog' : 'navigation'"
+        [mode]="mobile ? 'over' : 'side'"
+        [autoFocus]="false">
+        <div class="flex flex-col border-t-4 border-blue py-16 w-full">
+          <icr-logo class="block mx-auto mb-24" />
 
-        <div class="px-16 mb-16 w-64">
-          <div class="inline-grid shadow-1 hover:shadow-2 h-48 text-blue rounded-lg fab transition">
-            <button
-              matRipple
-              class="flex items-center h-full px-8 rounded-l-lg hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
-              type="button"
-              [routerLink]="[{ outlets: { popup: ['request'] } }]">
-              <mat-icon svgIcon="plus" />
-              <span class="base-text-bold ml-8">Novo</span>
-            </button>
-            <button
-              matRipple
-              class="flex items-center border-l border-gray h-full px-8 rounded-r-lg hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
-              type="button"
-              [matMenuTriggerFor]="newMenu">
-              <mat-icon svgIcon="caret-down" class="icon-12" />
-            </button>
+          <div *ngIf="user?.role !== role.Admin" class="px-16 mb-16 w-64">
+            <div class="inline-grid shadow-1 hover:shadow-2 h-48 text-blue rounded-lg fab transition">
+              <button
+                matRipple
+                class="flex items-center h-full px-8 rounded-l-lg hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+                type="button"
+                [routerLink]="[{ outlets: { popup: ['request'] } }]">
+                <mat-icon svgIcon="plus" />
+                <span class="base-text-bold ml-8">Novo</span>
+              </button>
+              <button
+                matRipple
+                class="flex items-center border-l border-gray h-full px-8 rounded-r-lg hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+                type="button"
+                [matMenuTriggerFor]="newMenu">
+                <mat-icon svgIcon="caret-down" class="icon-12" />
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 pr-4">
+            <ng-container *ngFor="let menuItem of menuItems$ | async">
+              <a
+                matRipple
+                class="flex items-center base-text-bold text-blue py-4 px-16 h-40 rounded-r-full hover:bg-blue-light focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition"
+                routerLinkActive="bg-blue-light"
+                [routerLink]="[menuItem.link]">
+                <mat-icon [svgIcon]="menuItem.icon" class="icon-20" />
+                <span class="block ml-16">{{ menuItem.label }}</span>
+              </a>
+            </ng-container>
           </div>
         </div>
+      </mat-sidenav>
+      <mat-sidenav-content id="u_1sqW">
+        <div class="grid grid-rows-min/1 grid-cols-1 h-full w-full min-w-[900px] overflow-x-auto">
+          <div id="dashboard--div--toolbar" class="flex items-center h-64 p-0 bg-white">
+            <div *ngIf="mobile" class="flex items-center justify-center w-64 h-full">
+              <button
+                matRipple
+                class="flex items-center justify-center h-40 w-40 border border-gray-light rounded text-graphite-light hover:text-blue hover:border-blue hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+                type="button"
+                aria-label="Menu"
+                (click)="sidenav.toggle()">
+                <mat-icon svgIcon="bars" class="icon-20" />
+              </button>
+            </div>
 
-        <div class="grid grid-cols-1 gap-4 pr-4">
-          <ng-container *ngFor="let menuItem of menuItems">
-            <a
-              matRipple
-              class="flex items-center base-text-bold text-blue py-4 px-16 h-40 rounded-r-full hover:bg-blue-light focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition"
-              routerLinkActive="bg-blue-light"
-              [routerLink]="[menuItem.link]">
-              <mat-icon [svgIcon]="menuItem.icon" class="icon-20" />
-              <span class="block ml-16">{{ menuItem.label }}</span>
-            </a>
-          </ng-container>
-        </div>
-      </div>
-    </mat-sidenav>
-    <mat-sidenav-content id="u_1sqW">
-      <div class="grid grid-rows-min/1 grid-cols-1 h-full w-full min-w-[900px] overflow-x-auto">
-        <div id="dashboard--div--toolbar" class="flex items-center h-64 p-0 bg-white">
-          <div *ngIf="mobile" class="flex items-center justify-center w-64 h-full">
-            <button
-              matRipple
-              class="flex items-center justify-center h-40 w-40 border border-gray-light rounded text-graphite-light hover:text-blue hover:border-blue hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
-              type="button"
-              aria-label="Menu"
-              (click)="sidenav.toggle()">
-              <mat-icon svgIcon="bars" class="icon-20" />
-            </button>
-          </div>
+            <div class="base-text-bold uppercase px-16">{{ title$ | async }}</div>
 
-          <div class="base-text-bold uppercase px-16">{{ title$ | async }}</div>
+            <div class="flex-1"></div>
 
-          <div class="flex-1"></div>
+            <div class="px-16">
+              <button
+                matRipple
+                class="flex items-center justify-center h-40 w-40 border border-gray-light rounded text-graphite-light hover:text-blue hover:border-blue hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+                type="button"
+                (click)="onThemeChanged()">
+                <mat-icon [svgIcon]="isDarkTheme ? 'moon' : 'sun'" class="icon-20" />
+              </button>
+            </div>
 
-          <div class="px-16">
-            <button
-              matRipple
-              class="flex items-center justify-center h-40 w-40 border border-gray-light rounded text-graphite-light hover:text-blue hover:border-blue hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
-              type="button"
-              (click)="onChangeTheme()">
-              <mat-icon [svgIcon]="isDarkTheme ? 'moon' : 'sun'" class="icon-20" />
-            </button>
-          </div>
-
-          <div class="flex items-center h-full border-l border-gray-light px-8">
-            <button
-              matRipple
-              class="user-menu grid grid-rows-1 py-4 pl-4 pr-8 rounded-full focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition hover:bg-blue-light"
-              type="button"
-              [matMenuTriggerFor]="userMenu">
-              <div
-                class="flex items-center justify-center w-40 h-40 rounded-full bg-gray-light text-graphite-light mr-16">
-                <mat-icon svgIcon="user" class="icon-16" />
-              </div>
-              <div *ngIf="!mobile" class="flex flex-col text-left mr-8">
-                <ng-container *ngrxLet="authUser$ as user">
+            <div class="flex items-center h-full border-l border-gray-light px-8">
+              <button
+                matRipple
+                class="user-menu grid grid-rows-1 py-4 pl-4 pr-8 rounded-full focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition hover:bg-blue-light"
+                type="button"
+                [matMenuTriggerFor]="userMenu">
+                <div
+                  class="flex items-center justify-center w-40 h-40 rounded-full bg-gray-light text-graphite-light mr-16">
+                  <mat-icon svgIcon="user" class="icon-16" />
+                </div>
+                <div *ngIf="!mobile" class="flex flex-col text-left mr-8">
                   <span class="base-text-bold text-blue">{{ user?.name || '--' }}</span>
                   <span class="base-text text-graphite-light">{{ user?.course | course }}</span>
-                </ng-container>
-              </div>
-              <div class="flex items-center text-blue h-40">
-                <mat-icon svgIcon="caret-down" class="icon-12" />
-              </div>
-            </button>
+                </div>
+                <div class="flex items-center text-blue h-40">
+                  <mat-icon svgIcon="caret-down" class="icon-12" />
+                </div>
+              </button>
+            </div>
           </div>
-        </div>
 
-        <main class="d-block mx-auto w-full h-full">
-          <router-outlet />
-          <router-outlet name="popup" />
-        </main>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+          <main class="d-block mx-auto w-full h-full">
+            <router-outlet />
+            <router-outlet name="popup" />
+          </main>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </ng-container>
 </ng-container>
 
 <mat-menu #userMenu="matMenu" xPosition="before">

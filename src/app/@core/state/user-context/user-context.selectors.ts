@@ -3,7 +3,9 @@ import { UserContextState, userContextKey } from './user-context.reducer';
 
 const selectUserContext = createFeatureSelector<UserContextState>(userContextKey);
 
-export const selectAuthUser = createSelector(selectUserContext, state => state.token.payload?.user);
+export const selectUser = createSelector(selectUserContext, state => state.token.payload?.user);
+
+export const selectRole = createSelector(selectUser, state => state?.role);
 
 export const selectLoggedIn = createSelector(selectUserContext, state => state.loggedIn);
 

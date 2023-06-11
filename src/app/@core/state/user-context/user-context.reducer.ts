@@ -65,6 +65,7 @@ export const userContextReducer = createReducer(
     })
   ),
   on(
+    fromUserContextActions.clearSession,
     fromUserContextActions.signOutSuccess,
     (): UserContextState => ({
       ...userContextInitialState,

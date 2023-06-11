@@ -74,7 +74,7 @@ export class UserContextEffects {
   redirectAfterSignOut$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(fromUserContextActions.signOutSuccess),
+        ofType(fromUserContextActions.clearSession, fromUserContextActions.signOutSuccess),
         tap(() => {
           this.router.navigateByUrl('/sign-in');
         })

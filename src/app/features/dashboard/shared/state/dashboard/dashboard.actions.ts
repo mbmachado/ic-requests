@@ -2,7 +2,6 @@ import { createAction, props } from '@ngrx/store';
 import { _Request } from '../../../../../@core/models/request.model';
 import { Comment } from '../../../../../@core/models/comment.model';
 
-export const registerIcons = createAction('[Dashboard Page] Register Icons');
 export const setTitle = createAction('[Dashboard Page] Set Title', props<{ title: string }>());
 
 export const loadRequests = createAction('[Workspace Page] Load Requests');

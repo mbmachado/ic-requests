@@ -29,3 +29,5 @@ export const signUpSuccess = createAction(
 );
 
 export const signUpFailure = createAction('[IC-Requests API] Sign Up Failure');
+
+export const clearSession = createAction('[Unauthorized Interceptor] Clear Session');
