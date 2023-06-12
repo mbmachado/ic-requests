@@ -3,15 +3,15 @@ import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 
-import { User } from '../../../../@core/models/user.model';
-import { RequestType } from '../../../../@core/models/enums/request-type.enum';
-import { Role } from '../../../../@core/models/enums/role.enum';
+import { User } from '@core/models/user.model';
+import { RequestType } from '@core/models/enums/request-type.enum';
+import { Role } from '@core/models/enums/role.enum';
+import * as fromUserContextSelectors from '@core/state/user-context/user-context.selectors';
+import * as fromUserContextActions from '@core/state/user-context/user-context.actions';
 import * as fromDashboardActions from '../../shared/state/dashboard/dashboard.actions';
 import * as fromDashboadSelectors from '../../shared/state/dashboard/dashboard.selectors';
-import * as fromUserContextSelectors from '../../../../@core/state/user-context/user-context.selectors';
-import * as fromUserContextActions from '../../../../@core/state/user-context/user-context.actions';
 
 interface MenuItem {
   icon: string;
@@ -27,9 +27,9 @@ interface MenuItem {
 export class DashboardComponent implements OnInit {
   mobile$: Observable<boolean>;
   title$!: Observable<string>;
-
   user$!: Observable<Partial<User> | undefined>;
-  menuItems$!: Observable<MenuItem[]>;
+  tabs$!: Observable<boolean>;
+  menu$!: Observable<MenuItem[]>;
 
   isDarkTheme: boolean;
 
@@ -45,37 +45,38 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.title$ = this.store.select(fromDashboadSelectors.selectTitle);
+    this.title$ = this.store.select(fromDashboadSelectors.selectTitle).pipe(delay(0));
     this.user$ = this.store.select(fromUserContextSelectors.selectUser);
+    this.tabs$ = this.store.select(fromDashboadSelectors.selectTabsVisible);
 
-    this.menuItems$ = this.user$.pipe(
+    this.menu$ = this.user$.pipe(
       map(user => {
         if (user?.role === Role.Admin) {
           return [
             {
               icon: 'inbox',
-              label: 'Workspace',
+              label: 'Início',
               link: '/dashboard/workspace',
             },
             {
               icon: 'arrows-turn-to-dots',
-              label: 'Workflows',
+              label: 'Fluxos de Trabalho',
               link: '/dashboard/workflows',
             },
             {
               icon: 'clipboard-list',
-              label: 'Solicitações',
-              link: '/dashboard/requests',
+              label: 'Modelos de Solicitação',
+              link: '/dashboard/request-tpls',
             },
             {
               icon: 'users',
               label: 'Usuários',
-              link: '/dashboard/profile',
+              link: '/dashboard/users',
             },
             {
               icon: 'gear',
               label: 'Configurações',
-              link: '/dashboard/profile',
+              link: '/dashboard/settings',
             },
             {
               icon: 'user',

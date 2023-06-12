@@ -13,6 +13,19 @@ mat-sidenav-container.root-dashboard {
     grid-template-columns: repeat(2, min-content);
   }
 
+  div.tabs {
+    &::after {
+      content: '';
+      @apply absolute h-4 rounded-t bg-blue bottom-0 w-[86px];
+      transition: 300ms ease-in-out;
+      transform: translatex(0%);
+    }
+
+    &:has(a.board)::after {
+      transform: translatex(calc(100% + 20px));
+    }
+  }
+
   button.user-menu {
     grid-template-columns: repeat(2, min-content);
   }

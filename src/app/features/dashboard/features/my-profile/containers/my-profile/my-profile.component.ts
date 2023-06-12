@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import * as fromDashboardActions from '../../shared/state/dashboard/dashboard.actions';
+import * as fromDashboardActions from '../../../../shared/state/dashboard/dashboard.actions';
 
 @Component({
   selector: 'icr-my-profile',

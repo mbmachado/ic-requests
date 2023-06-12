@@ -29,13 +29,12 @@ const dashboardInitialState: DashboardState = {
 export const dashboardReducer = createReducer(
   dashboardInitialState,
   on(fromDashboardActions.setTitle, (state, { title }): DashboardState => {
-    if (state.title === title) {
-      return state;
-    }
-
     return {
       ...state,
       title,
+      details: {
+        ...state.details,
+      },
     };
   }),
   on(

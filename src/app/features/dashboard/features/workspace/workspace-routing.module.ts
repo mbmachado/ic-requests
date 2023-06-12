@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { WorkspaceComponent } from './containers/workspace/workspace.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { DetailsComponent } from './containers/details/details.component';
+import { permissionGuard } from '../../../../@core/guards/permission.guard';
+import { Role } from '../../../../@core/models/enums/role.enum';
 
 const routes: Routes = [
   {
@@ -18,6 +20,11 @@ const routes: Routes = [
         component: DetailsComponent,
       },
     ],
+  },
+  {
+    path: 'board',
+    loadChildren: () => import('./features/board/board.module').then(m => m.BoardModule),
+    canActivate: [permissionGuard([Role.Admin])],
   },
 ];
 

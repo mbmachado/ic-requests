@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { StepStage } from '../../../../../../@core/models/enums/step-stage.enum';
-import { StepStatus } from '../../../../../../@core/models/enums/step-status.enum';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { Observable, tap } from 'rxjs';
+
+import { RequestType } from '@core/models/enums/request-type.enum';
+import { CommentService } from '@core/services/data/comment.service';
+import { ToastrService } from '@core/services/misc/toastr.service';
+import { StepStage } from '@core/models/enums/step-stage.enum';
+import { StepStatus } from '@core/models/enums/step-status.enum';
+import { _Request } from '@core/models/request.model';
 import * as fromDashboardActions from '../../../../shared/state/dashboard/dashboard.actions';
 import * as fromDashboardSelectors from '../../../../shared/state/dashboard/dashboard.selectors';
-import { Observable, tap } from 'rxjs';
-import { _Request } from '../../../../../../@core/models/request.model';
-import { RequestType } from '../../../../../../@core/models/enums/request-type.enum';
-import { CommentService } from '../../../../../../@core/services/data/comment.service';
-import { ToastrService } from '../../../../../../@core/services/misc/toastr.service';
 
 interface CommentForm {
   comment: FormControl<string | null>;

@@ -1,6 +1,6 @@
 import { Course } from './enums/course.enum';
 import { Role } from './enums/role.enum';
-import { Type } from './enums/type.enum';
+import { UserType } from './enums/user-type.enum';
 
 export interface TokenPayload {
   exp: number;
@@ -14,6 +14,6 @@ export interface TokenPayload {
     name: string;
     course: Course;
     role: Role;
-    type: Type;
+    type: UserType;
   };
 }
