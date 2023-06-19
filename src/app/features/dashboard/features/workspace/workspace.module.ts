@@ -15,6 +15,7 @@ import { DetailsComponent } from './containers/details/details.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { TagComponent } from '../../../../shared/tag/tag.component';
 import { PriorityComponent } from '../../../../shared/priority/priority.component';
+import { SearchComponent } from '../../../../shared/search/search.component';
 
 @NgModule({
   declarations: [WorkspaceComponent, WelcomeComponent, DetailsComponent, CommentComponent],
@@ -28,6 +29,7 @@ import { PriorityComponent } from '../../../../shared/priority/priority.componen
     AvatarComponent,
     PriorityComponent,
     StepComponent,
+    SearchComponent,
     TagComponent,
   ],
 })

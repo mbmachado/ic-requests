@@ -78,7 +78,7 @@
       <mat-form-field class="w-full">
         <mat-select id="sign-up--input--course" formControlName="course">
           <mat-option *ngFor="let course of couses" [value]="course">
-            {{ course | course }}
+            {{ course | userCourse }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="course?.invalid">Curso é obrigatório</mat-error>

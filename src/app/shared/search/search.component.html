@@ -1,0 +1,20 @@
+<div class="relative">
+  <input
+    #input
+    type="text"
+    class="h-40 bg-white w-full pl-16 pr-48 py-8 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue focus:border-transparent"
+    placeholder="Pesquisar"
+    [formControl]="search" />
+  <div class="absolute top-0 right-16 bottom-0 flex items-center">
+    <mat-icon *ngIf="!input.value; else clearTpl" svgIcon="search" class="text-graphite-light icon-16" />
+
+    <ng-template #clearTpl>
+      <button
+        type="button"
+        class="block h-16 text-blue rounded-full focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+        (click)="clearSearch()">
+        <mat-icon svgIcon="circle-xmark" class="icon-16" />
+      </button>
+    </ng-template>
+  </div>
+</div>

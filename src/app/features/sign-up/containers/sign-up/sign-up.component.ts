@@ -5,17 +5,17 @@ import { Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
 
-import * as fromUserContextSelectors from '../../../../@core/state/user-context/user-context.selectors';
-import { fullName } from '../../../../@core/utils/patterns.utils';
-import { Course } from '../../../../@core/models/enums/course.enum';
-import { signUp } from '../../../../@core/state/user-context/user-context.actions';
+import * as fromUserContextSelectors from '@core/state/user-context/user-context.selectors';
+import { fullName } from '@core/utils/patterns.utils';
+import { UserCourse } from '@core/models/enums/user-course.enum';
+import { signUp } from '@core/state/user-context/user-context.actions';
 
 interface SignUpForm {
   name: FormControl<string>;
   email: FormControl<string>;
   password: FormControl<string>;
   enrollment_number: FormControl<string>;
-  course: FormControl<Course>;
+  course: FormControl<UserCourse>;
 }
 
 @Component({
@@ -29,7 +29,7 @@ export class SignUpComponent {
   form: FormGroup<SignUpForm>;
   hide = true;
 
-  readonly couses = Object.values(Course);
+  readonly couses = Object.values(UserCourse);
 
   constructor(private formBuilder: FormBuilder, private store: Store) {
     this.loading$ = this.store.select(fromUserContextSelectors.selectLoading);
@@ -39,7 +39,7 @@ export class SignUpComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       enrollment_number: ['', [Validators.required, Validators.pattern(/^[0-9]{6,15}$/)]],
-      course: [Course.ComputerScience, [Validators.required]],
+      course: [UserCourse.ComputerScience, [Validators.required]],
     });
   }
 

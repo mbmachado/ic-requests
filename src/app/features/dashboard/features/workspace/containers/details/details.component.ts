@@ -8,7 +8,7 @@ import { Observable, tap } from 'rxjs';
 import { RequestType } from '@core/models/enums/request-type.enum';
 import { CommentService } from '@core/services/data/comment.service';
 import { ToastrService } from '@core/services/misc/toastr.service';
-import { StepStage } from '@core/models/enums/step-stage.enum';
+import { StepType } from '@core/models/enums/step-type.enum';
 import { StepStatus } from '@core/models/enums/step-status.enum';
 import { _Request } from '@core/models/request.model';
 import * as fromDashboardActions from '../../../../shared/state/dashboard/dashboard.actions';
@@ -32,7 +32,7 @@ export class DetailsComponent implements OnInit {
 
   private readonly inicialSteps = [
     {
-      stage: StepStage.Initial,
+      stage: StepType.Initial,
       status: StepStatus.Active,
       name: 'Aguardando',
     },
@@ -40,7 +40,7 @@ export class DetailsComponent implements OnInit {
 
   private readonly finalSteps = [
     {
-      stage: StepStage.Final,
+      stage: StepType.Final,
       status: StepStatus.Inactive,
       name: 'Finalizado',
     },
@@ -49,12 +49,12 @@ export class DetailsComponent implements OnInit {
   steps = [
     ...this.inicialSteps,
     {
-      stage: StepStage.Intermediate,
+      stage: StepType.Intermediate,
       status: StepStatus.Inactive,
       name: 'Gerar Documento',
     },
     {
-      stage: StepStage.Intermediate,
+      stage: StepType.Intermediate,
       status: StepStatus.Inactive,
       name: 'Assinar',
     },
@@ -85,12 +85,12 @@ export class DetailsComponent implements OnInit {
               this.steps = [
                 ...this.inicialSteps,
                 {
-                  stage: StepStage.Intermediate,
+                  stage: StepType.Intermediate,
                   status: StepStatus.Inactive,
                   name: 'Analisar',
                 },
                 {
-                  stage: StepStage.Intermediate,
+                  stage: StepType.Intermediate,
                   status: StepStatus.Inactive,
                   name: 'Cadastrar',
                 },
@@ -100,17 +100,17 @@ export class DetailsComponent implements OnInit {
             case RequestType.InternshipTermSigning:
               this.steps = [
                 {
-                  stage: StepStage.Initial,
+                  stage: StepType.Initial,
                   status: StepStatus.Active,
                   name: 'Aguardando',
                 },
                 {
-                  stage: StepStage.Intermediate,
+                  stage: StepType.Intermediate,
                   status: StepStatus.Inactive,
                   name: 'Assinar',
                 },
                 {
-                  stage: StepStage.Final,
+                  stage: StepType.Final,
                   status: StepStatus.Inactive,
                   name: 'Finalizado',
                 },
@@ -119,17 +119,17 @@ export class DetailsComponent implements OnInit {
             case RequestType.Question:
               this.steps = [
                 {
-                  stage: StepStage.Initial,
+                  stage: StepType.Initial,
                   status: StepStatus.Concluded,
                   name: 'Aguardando',
                 },
                 {
-                  stage: StepStage.Intermediate,
+                  stage: StepType.Intermediate,
                   status: StepStatus.Active,
                   name: 'Atendimento',
                 },
                 {
-                  stage: StepStage.Final,
+                  stage: StepType.Final,
                   status: StepStatus.Inactive,
                   name: 'Finalizado',
                 },
@@ -139,12 +139,12 @@ export class DetailsComponent implements OnInit {
               this.steps = [
                 ...this.inicialSteps,
                 {
-                  stage: StepStage.Intermediate,
+                  stage: StepType.Intermediate,
                   status: StepStatus.Inactive,
                   name: 'Gerar Documento',
                 },
                 {
-                  stage: StepStage.Intermediate,
+                  stage: StepType.Intermediate,
                   status: StepStatus.Inactive,
                   name: 'Assinar',
                 },

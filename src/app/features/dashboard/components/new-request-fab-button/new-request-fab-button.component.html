@@ -1,0 +1,47 @@
+<div class="inline-grid shadow-1 hover:shadow-2 h-48 text-blue rounded-lg fab transition">
+  <button
+    matRipple
+    class="flex items-center h-full px-8 rounded-l-lg hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+    type="button"
+    [routerLink]="[{ outlets: { popup: ['request'] } }]">
+    <mat-icon svgIcon="plus" />
+    <span class="base-text-bold ml-8">Novo</span>
+  </button>
+  <button
+    matRipple
+    class="flex items-center border-l border-gray h-full px-8 rounded-r-lg hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+    type="button"
+    [matMenuTriggerFor]="newMenu">
+    <mat-icon svgIcon="caret-down" class="icon-12" />
+  </button>
+</div>
+
+<mat-menu #newMenu="matMenu" xPosition="before">
+  <button
+    mat-menu-item
+    [routerLink]="[{ outlets: { popup: ['request'] } }]"
+    [queryParams]="{ type: requestType.WorkloadClaim }">
+    Aproveitamento de C.H.
+  </button>
+  <button
+    mat-menu-item
+    [routerLink]="[{ outlets: { popup: ['request'] } }]"
+    [queryParams]="{ type: requestType.EnrollmentProof }">
+    Comprovante de Matrícula
+  </button>
+  <button
+    mat-menu-item
+    [routerLink]="[{ outlets: { popup: ['request'] } }]"
+    [queryParams]="{ type: requestType.InternshipTermSigning }">
+    Assinatura Termo Estágio
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button
+    mat-menu-item
+    [routerLink]="[{ outlets: { popup: ['request'] } }]"
+    [queryParams]="{ type: requestType.Question }">
+    Pergunta / Dúvida
+  </button>
+</mat-menu>

@@ -1,5 +1,5 @@
-import { Course } from './enums/course.enum';
-import { Role } from './enums/role.enum';
+import { UserCourse } from './enums/user-course.enum';
+import { UserRole } from './enums/user-role.enum';
 import { UserType } from './enums/user-type.enum';
 
 export interface TokenPayload {
@@ -12,8 +12,8 @@ export interface TokenPayload {
   sub: string;
   user: {
     name: string;
-    course: Course;
-    role: Role;
+    course: UserCourse;
+    role: UserRole;
     type: UserType;
   };
 }

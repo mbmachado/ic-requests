@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+import { authGuard } from '@core/guards/auth.guard';
+import { permissionGuard } from '@core/guards/permission.guard';
+import { UserRole } from '@core/models/enums/user-role.enum';
 import { DashboardComponent } from './containers/dashboard/dashboard.component';
-import { authGuard } from '../../@core/guards/auth.guard';
-import { permissionGuard } from '../../@core/guards/permission.guard';
-import { Role } from '../../@core/models/enums/role.enum';
 
 const routes: Routes = [
   {
@@ -27,22 +28,22 @@ const routes: Routes = [
           {
             path: 'workflows',
             loadChildren: () => import('./features/workflows/workflows.module').then(m => m.WorkflowsModule),
-            canActivate: [permissionGuard([Role.Admin])],
+            canActivate: [permissionGuard([UserRole.Admin])],
           },
           {
             path: 'request-tpls',
             loadChildren: () => import('./features/request-tpls/request-tpls.module').then(m => m.RequestTplsModule),
-            canActivate: [permissionGuard([Role.Admin])],
+            canActivate: [permissionGuard([UserRole.Admin])],
           },
           {
             path: 'users',
             loadChildren: () => import('./features/users/users.module').then(m => m.UsersModule),
-            canActivate: [permissionGuard([Role.Admin])],
+            canActivate: [permissionGuard([UserRole.Admin])],
           },
           {
             path: 'settings',
             loadChildren: () => import('./features/settings/settings.module').then(m => m.SettingsModule),
-            canActivate: [permissionGuard([Role.Admin])],
+            canActivate: [permissionGuard([UserRole.Admin])],
           },
           {
             path: 'profile',

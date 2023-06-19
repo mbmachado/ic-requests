@@ -1,13 +1,41 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoursePipe } from './course.pipe';
+import { UserCoursePipe } from './user-course.pipe';
 import { RequestTypePipe } from './request-type.pipe';
 import { UserTypePipe } from './user-type.pipe';
+import { AssigneeTypePipe } from './assignee-type.pipe';
+import { RequestPriorityPipe } from './request-priority.pipe';
+import { RequestStatusPipe } from './request-status.pipe';
+import { RequestTemplateStatusPipe } from './request-template-status.pipe';
 
 @NgModule({
-  declarations: [CoursePipe, RequestTypePipe, UserTypePipe],
+  declarations: [
+    UserCoursePipe,
+    RequestTypePipe,
+    UserTypePipe,
+    AssigneeTypePipe,
+    RequestPriorityPipe,
+    RequestStatusPipe,
+    RequestTemplateStatusPipe,
+  ],
   imports: [CommonModule],
-  exports: [CoursePipe, RequestTypePipe, UserTypePipe],
-  providers: [CoursePipe, RequestTypePipe, UserTypePipe],
+  exports: [
+    UserCoursePipe,
+    RequestTypePipe,
+    UserTypePipe,
+    AssigneeTypePipe,
+    RequestPriorityPipe,
+    RequestStatusPipe,
+    RequestTemplateStatusPipe,
+  ],
+  providers: [
+    UserCoursePipe,
+    RequestTypePipe,
+    UserTypePipe,
+    AssigneeTypePipe,
+    RequestPriorityPipe,
+    RequestStatusPipe,
+    RequestTemplateStatusPipe,
+  ],
 })
 export class PipesModule {}

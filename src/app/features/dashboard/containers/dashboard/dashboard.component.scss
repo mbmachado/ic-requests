@@ -9,11 +9,8 @@ mat-sidenav-container.root-dashboard {
     @apply bg-gray-light;
   }
 
-  div.fab {
-    grid-template-columns: repeat(2, min-content);
-  }
-
   div.tabs {
+    @apply flex items-center relative gap-x-20 h-full;
     &::after {
       content: '';
       @apply absolute h-4 rounded-t bg-blue bottom-0 w-[86px];

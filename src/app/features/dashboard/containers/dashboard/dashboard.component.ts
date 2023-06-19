@@ -6,8 +6,7 @@ import { Store } from '@ngrx/store';
 import { delay, map } from 'rxjs/operators';
 
 import { User } from '@core/models/user.model';
-import { RequestType } from '@core/models/enums/request-type.enum';
-import { Role } from '@core/models/enums/role.enum';
+import { UserRole } from '@core/models/enums/user-role.enum';
 import * as fromUserContextSelectors from '@core/state/user-context/user-context.selectors';
 import * as fromUserContextActions from '@core/state/user-context/user-context.actions';
 import * as fromDashboardActions from '../../shared/state/dashboard/dashboard.actions';
@@ -33,8 +32,7 @@ export class DashboardComponent implements OnInit {
 
   isDarkTheme: boolean;
 
-  readonly requestType = RequestType;
-  readonly role = Role;
+  readonly role = UserRole;
 
   constructor(breakpointObserver: BreakpointObserver, private store: Store) {
     this.mobile$ = breakpointObserver.observe(['(max-width: 640px)']).pipe(map(result => result.matches));
@@ -51,7 +49,7 @@ export class DashboardComponent implements OnInit {
 
     this.menu$ = this.user$.pipe(
       map(user => {
-        if (user?.role === Role.Admin) {
+        if (user?.role === UserRole.Admin) {
           return [
             {
               icon: 'inbox',

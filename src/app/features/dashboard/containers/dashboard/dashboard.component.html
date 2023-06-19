@@ -18,24 +18,8 @@
       <div class="flex flex-col border-t-4 border-blue py-16 w-full">
         <icr-logo class="block mx-auto mb-24" />
 
-        <div *ngIf="vm.user?.role !== role.Admin" class="px-16 mb-16 w-64">
-          <div class="inline-grid shadow-1 hover:shadow-2 h-48 text-blue rounded-lg fab transition">
-            <button
-              matRipple
-              class="flex items-center h-full px-8 rounded-l-lg hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
-              type="button"
-              [routerLink]="[{ outlets: { popup: ['request'] } }]">
-              <mat-icon svgIcon="plus" />
-              <span class="base-text-bold ml-8">Novo</span>
-            </button>
-            <button
-              matRipple
-              class="flex items-center border-l border-gray h-full px-8 rounded-r-lg hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
-              type="button"
-              [matMenuTriggerFor]="newMenu">
-              <mat-icon svgIcon="caret-down" class="icon-12" />
-            </button>
-          </div>
+        <div *ngIf="vm.user?.role !== role.Admin" class="px-16 mb-16">
+          <icr-new-request-fab-button />
         </div>
 
         <div class="grid grid-cols-1 gap-4 pr-4">
@@ -55,34 +39,25 @@
     <mat-sidenav-content id="u_1sqW">
       <div class="grid grid-rows-min/1 grid-cols-1 h-full w-full min-w-[900px] overflow-x-auto">
         <div id="dashboard--div--toolbar" class="flex items-center h-64 p-0 bg-white">
-          <div *ngIf="vm.mobile" class="flex items-center justify-center w-64 h-full">
-            <button
-              matRipple
-              class="flex items-center justify-center h-40 w-40 border border-gray-light rounded text-graphite-light hover:text-blue hover:border-blue hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
-              type="button"
-              aria-label="Menu"
-              (click)="sidenav.toggle()">
+          <div *ngIf="vm.mobile" class="flex items-center justify-center h-full ml-16">
+            <button matRipple icrIconButton type="button" aria-label="Menu" (click)="sidenav.toggle()">
               <mat-icon svgIcon="bars" class="icon-20" />
             </button>
           </div>
 
-          <div class="base-text-bold uppercase px-16">{{ vm.title }}</div>
+          <div class="base-text-bold uppercase ml-16">{{ vm.title }}</div>
 
-          <div *ngIf="!vm.mobile && vm.tabs" class="tabs flex items-center gap-x-20 h-full relative ml-32">
+          <div *ngIf="!vm.mobile && vm.tabs" class="tabs ml-48">
             <a
               matRipple
-              class="flex items-center justify-center h-40 w-[86px] focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent rounded-full hover:bg-blue-light transition"
+              icrTabButton
               routerLinkActive="text-blue"
               [routerLink]="['/dashboard/workspace']"
               [routerLinkActiveOptions]="{ exact: true }">
               <mat-icon svgIcon="list-ul" class="icon-16" />
               <span class="ml-8">Lista</span>
             </a>
-            <a
-              matRipple
-              class="flex items-center justify-center h-40 w-[86px] focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent rounded-full hover:bg-blue-light transition"
-              routerLinkActive="text-blue board"
-              [routerLink]="['/dashboard/workspace/board']">
+            <a matRipple icrTabButton routerLinkActive="text-blue board" [routerLink]="['/dashboard/workspace/board']">
               <mat-icon svgIcon="chalkboard" class="icon-16" />
               <span class="ml-8">Quadro</span>
             </a>
@@ -90,17 +65,16 @@
 
           <div class="flex-1"></div>
 
-          <div class="px-16">
-            <button
-              matRipple
-              class="flex items-center justify-center h-40 w-40 border border-gray-light rounded text-graphite-light hover:text-blue hover:border-blue hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
-              type="button"
-              (click)="onThemeChanged()">
+          <div class="flex gap-x-16 mr-16">
+            <button matRipple icrIconButton type="button" (click)="onThemeChanged()">
               <mat-icon [svgIcon]="isDarkTheme ? 'moon' : 'sun'" class="icon-20" />
+            </button>
+            <button matRipple icrIconButton type="button">
+              <mat-icon svgIcon="bell" class="icon-20" />
             </button>
           </div>
 
-          <div class="flex items-center h-full border-l border-gray-light px-8">
+          <div class="flex items-center h-full border-l border-gray-light pl-12 pr-8">
             <button
               matRipple
               class="user-menu grid grid-rows-1 py-4 pl-4 pr-8 rounded-full focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition hover:bg-blue-light"
@@ -118,7 +92,7 @@
                   </ng-container>
 
                   <ng-template #courseTpl>
-                    {{ vm.user?.course | course }}
+                    {{ vm.user?.course | userCourse }}
                   </ng-template>
                 </span>
               </div>
@@ -140,34 +114,4 @@
 
 <mat-menu #userMenu="matMenu" xPosition="before">
   <button mat-menu-item (click)="onSignOut()"><mat-icon class="icon-20" svgIcon="right-from-bracket" />Sair</button>
-</mat-menu>
-
-<mat-menu #newMenu="matMenu" xPosition="before">
-  <button
-    mat-menu-item
-    [routerLink]="[{ outlets: { popup: ['request'] } }]"
-    [queryParams]="{ type: requestType.WorkloadClaim }">
-    Aproveitamento de C.H.
-  </button>
-  <button
-    mat-menu-item
-    [routerLink]="[{ outlets: { popup: ['request'] } }]"
-    [queryParams]="{ type: requestType.EnrollmentProof }">
-    Comprovante de Matrícula
-  </button>
-  <button
-    mat-menu-item
-    [routerLink]="[{ outlets: { popup: ['request'] } }]"
-    [queryParams]="{ type: requestType.InternshipTermSigning }">
-    Assinatura Termo Estágio
-  </button>
-
-  <mat-divider></mat-divider>
-
-  <button
-    mat-menu-item
-    [routerLink]="[{ outlets: { popup: ['request'] } }]"
-    [queryParams]="{ type: requestType.Question }">
-    Pergunta / Dúvida
-  </button>
 </mat-menu>
