@@ -164,6 +164,14 @@ mat-icon {
   }
 }
 
+.small-dialog {
+  @apply bg-white rounded drop-shadow-lg w-full max-w-[700px] h-full max-h-[500px];
+}
+
+.large-dialog {
+  @apply bg-white rounded drop-shadow-lg w-full max-w-[900px] h-full max-h-[700px];
+}
+
 .fullscreen-dialog {
   @apply h-full w-full;
 }

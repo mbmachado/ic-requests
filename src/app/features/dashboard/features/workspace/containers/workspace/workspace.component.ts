@@ -8,6 +8,8 @@ import { UserRole } from '@core/models/enums/user-role.enum';
 import * as fromUserContextSelectors from '@core/state/user-context/user-context.selectors';
 import * as fromDashboadSelectors from '../../../../shared/state/dashboard/dashboard.selectors';
 import * as fromDashboardActions from '../../../../shared/state/dashboard/dashboard.actions';
+import { Dialog } from '@angular/cdk/dialog';
+import { FilterDialogComponent } from '../../components/filter-dialog/filter-dialog.component';
 
 @Component({
   selector: 'icr-workspace',
@@ -21,7 +23,7 @@ export class WorkspaceComponent implements OnInit {
 
   readonly userRole = UserRole;
 
-  constructor(private store: Store) {}
+  constructor(private dialog: Dialog, private store: Store) {}
 
   ngOnInit() {
     this.store.dispatch(fromDashboardActions.setTitle({ title: 'Início' }));
@@ -29,6 +31,17 @@ export class WorkspaceComponent implements OnInit {
     this.requests$ = this.store.select(fromDashboadSelectors.selectRequests);
     this.loading$ = this.store.select(fromDashboadSelectors.selectLoading);
     this.role$ = this.store.select(fromUserContextSelectors.selectRole);
+  }
+
+  onOpenFilters() {
+    const dialogRef = this.dialog.open(FilterDialogComponent, {
+      panelClass: 'small-dialog',
+      hasBackdrop: true,
+    });
+
+    dialogRef.closed.subscribe(() => {
+      console.log('closed');
+    });
   }
 
   trackByFn(index: number, item: _Request) {

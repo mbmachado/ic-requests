@@ -1,0 +1,19 @@
+<div class="grid h-full root-filters">
+  <div class="flex items-center justify-between p-16 border-b border-gray-light">
+    <span class="large-text">Filtros</span>
+
+    <button
+      matRipple
+      class="flex items-center bg-white p-4 rounded-full hover:bg-blue-light transition focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue focus:border-transparent"
+      (click)="onClose()">
+      <mat-icon svgIcon="xmark" class="text-blue icon-24" />
+    </button>
+  </div>
+
+  <div class="h-full p-16 overflow-y-auto">Não disponível.</div>
+
+  <div class="flex justify-end gap-x-16 p-16 border-t border-gray-light">
+    <button mat-stroked-button color="primary">Limpar</button>
+    <button mat-flat-button color="primary">Aplicar</button>
+  </div>
+</div>

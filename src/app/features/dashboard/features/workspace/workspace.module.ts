@@ -16,13 +16,16 @@ import { CommentComponent } from './components/comment/comment.component';
 import { TagComponent } from '../../../../shared/tag/tag.component';
 import { PriorityComponent } from '../../../../shared/priority/priority.component';
 import { SearchComponent } from '../../../../shared/search/search.component';
+import { FilterDialogComponent } from './components/filter-dialog/filter-dialog.component';
+import { DialogModule } from '@angular/cdk/dialog';
 
 @NgModule({
-  declarations: [WorkspaceComponent, WelcomeComponent, DetailsComponent, CommentComponent],
+  declarations: [WorkspaceComponent, WelcomeComponent, DetailsComponent, CommentComponent, FilterDialogComponent],
   imports: [
     CommonModule,
     WorkspaceRoutingModule,
     ReactiveFormsModule,
+    DialogModule,
     LetModule,
     ThemeModule,
     PipesModule,

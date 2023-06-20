@@ -1,6 +1,7 @@
 import { Observable, catchError, map } from 'rxjs';
 import { BaseEntityModel } from '../../models/base/base-entity.model';
 import { BaseService } from './base.service';
+import { Pageable } from '../../models/pageable.model';
 
 export abstract class BaseEntityService<T extends BaseEntityModel> extends BaseService {
   constructor(protected path: string) {
@@ -10,7 +11,10 @@ export abstract class BaseEntityService<T extends BaseEntityModel> extends BaseS
   getAll(filters?: string): Observable<T[]> {
     const url = `${this.apiUrl}/${this.path}${filters ? `?${filters}` : ''}`;
 
-    return this.http.get<T[]>(url).pipe(catchError(this.handleError));
+    return this.http.get<Pageable<T>>(url).pipe(
+      map(pageableEntities => pageableEntities.data),
+      catchError(this.handleError)
+    );
   }
 
   getById(id: number): Observable<T> {
