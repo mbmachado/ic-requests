@@ -8,13 +8,10 @@ export abstract class BaseEntityService<T extends BaseEntityModel> extends BaseS
     super();
   }
 
-  getAll(filters?: string): Observable<T[]> {
+  getAll(filters?: string): Observable<Pageable<T>> {
     const url = `${this.apiUrl}/${this.path}${filters ? `?${filters}` : ''}`;
 
-    return this.http.get<Pageable<T>>(url).pipe(
-      map(pageableEntities => pageableEntities.data),
-      catchError(this.handleError)
-    );
+    return this.http.get<Pageable<T>>(url).pipe(catchError(this.handleError));
   }
 
   getById(id: number): Observable<T> {

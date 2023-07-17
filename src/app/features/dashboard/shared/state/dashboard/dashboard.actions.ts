@@ -1,13 +1,15 @@
 import { createAction, props } from '@ngrx/store';
 import { _Request } from '../../../../../@core/models/request.model';
 import { Comment } from '../../../../../@core/models/comment.model';
+import { Pageable } from '@core/models/pageable.model';
 
 export const setTitle = createAction('[Dashboard Page] Set Title', props<{ title: string }>());
 
 export const loadRequests = createAction('[Workspace Page] Load Requests');
+export const loadMoreRequests = createAction('[Workspace Page] Load More Requests');
 export const loadRequestsSuccess = createAction(
   '[IC-Requests API] Load Requests Success',
-  props<{ requests: _Request[] }>()
+  props<{ requests: Pageable<_Request> }>()
 );
 export const loadRequestsFailure = createAction('[IC-Requests API]  Load Requests Failure');
 

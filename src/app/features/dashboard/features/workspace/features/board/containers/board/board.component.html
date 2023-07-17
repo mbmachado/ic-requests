@@ -1,1 +1,143 @@
 <icr-filters-bar />
+
+<div *ngIf="todo.length > 0" cdkDropListGroup class="flex gap-x-16 p-16 overflow-x-auto">
+  <div class="board-container">
+    <div
+      class="flex items-center w-full mb-16 drop-shadow uppercase px-16 py-8 font-extra-bold text-sm rounded h-40 border-t-2 border-yellow bg-white">
+      Aguardando
+
+      <div class="flex justify-center text-graphite-light rounded-full w-28 border border-gray ml-8">
+        {{ todo.length }}
+      </div>
+    </div>
+
+    <div cdkDropList [cdkDropListData]="todo" class="board-list" (cdkDropListDropped)="drop($event)">
+      <div
+        role="button"
+        *ngFor="let item of todo"
+        cdkDrag
+        class="block bg-white rounded drop-shadow-sm p-8 mb-16 last:mb-0 border-b border-gray-light hover:bg-blue-light transition-colors focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent">
+        <div class="grid grid-cols-1/min gap-x-8">
+          <div class="block">
+            <div class="text-graphite-light label-text uppercase mb-4">
+              {{ item.updated_at | date : 'dd/MM/yyyy' }}
+            </div>
+            <div class="text-graphite base-text-bold truncate mb-8">{{ item.title }}</div>
+            <div class="text-graphite-light mb-16">Previsão: 19/07/2023</div>
+
+            <icr-tag schema="gray">CEAG-IC</icr-tag>
+          </div>
+          <div class="flex flex-col justify-between items-center gap-y-16">
+            <icr-priority [kind]="'normal'" tooltipPosition="right" />
+            <icr-avatar [name]="'Ana Cardoso'" tooltipPosition="right" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="board-container">
+    <div
+      class="flex items-center w-full mb-16 drop-shadow uppercase px-16 py-8 font-extra-bold text-sm rounded h-40 border-t-2 border-blue bg-white">
+      Gerar documento
+
+      <div class="flex justify-center text-graphite-light rounded-full w-28 border border-gray ml-8">
+        {{ generatingDocument.length }}
+      </div>
+    </div>
+
+    <div cdkDropList [cdkDropListData]="generatingDocument" class="board-list" (cdkDropListDropped)="drop($event)">
+      <div
+        role="button"
+        *ngFor="let item of generatingDocument"
+        cdkDrag
+        class="block bg-white rounded drop-shadow-sm p-8 mb-16 last:mb-0 border-b border-gray-light hover:bg-blue-light transition-colors focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent">
+        <div class="grid grid-cols-1/min gap-x-8">
+          <div class="block">
+            <div class="text-graphite-light label-text uppercase mb-4">
+              {{ item.updated_at | date : 'dd/MM/yyyy' }}
+            </div>
+            <div class="text-graphite base-text-bold truncate mb-8">{{ item.title }}</div>
+            <div class="text-graphite-light mb-16">Previsão: 19/07/2023</div>
+
+            <icr-tag schema="gray">CEAG-IC</icr-tag>
+          </div>
+          <div class="flex flex-col justify-between items-center gap-y-16">
+            <icr-priority [kind]="'normal'" tooltipPosition="right" />
+            <icr-avatar [name]="'Ana Cardoso'" tooltipPosition="right" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="board-container">
+    <div
+      class="flex items-center w-full mb-16 drop-shadow uppercase px-16 py-8 font-extra-bold text-sm rounded h-40 border-t-2 border-blue bg-white">
+      Assinar
+
+      <div class="flex justify-center text-graphite-light rounded-full w-28 border border-gray ml-8">
+        {{ signingDocument.length }}
+      </div>
+    </div>
+
+    <div cdkDropList [cdkDropListData]="signingDocument" class="board-list" (cdkDropListDropped)="drop($event)">
+      <div
+        role="button"
+        *ngFor="let item of signingDocument"
+        cdkDrag
+        class="block bg-white rounded drop-shadow-sm p-8 mb-16 last:mb-0 border-b border-gray-light hover:bg-blue-light transition-colors focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent">
+        <div class="grid grid-cols-1/min gap-x-8">
+          <div class="block">
+            <div class="text-graphite-light label-text uppercase mb-4">
+              {{ item.updated_at | date : 'dd/MM/yyyy' }}
+            </div>
+            <div class="text-graphite base-text-bold truncate mb-8">{{ item.title }}</div>
+            <div class="text-graphite-light mb-16">Previsão: 19/07/2023</div>
+
+            <icr-tag schema="gray">CEAG-IC</icr-tag>
+          </div>
+          <div class="flex flex-col justify-between items-center gap-y-16">
+            <icr-priority [kind]="'normal'" tooltipPosition="right" />
+            <icr-avatar [name]="'Ana Cardoso'" tooltipPosition="right" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="board-container">
+    <div
+      class="flex items-center w-full mb-16 drop-shadow uppercase px-16 py-8 font-extra-bold text-sm rounded h-40 border-t-2 border-green bg-white">
+      Finalizado
+
+      <div class="flex justify-center text-graphite-light rounded-full w-28 border border-gray ml-8">
+        {{ done.length }}
+      </div>
+    </div>
+
+    <div cdkDropList [cdkDropListData]="done" class="board-list" (cdkDropListDropped)="drop($event)">
+      <div
+        role="button"
+        *ngFor="let item of done"
+        cdkDrag
+        class="block bg-white rounded drop-shadow-sm p-8 mb-16 last:mb-0 border-b border-gray-light hover:bg-blue-light transition-colors focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent">
+        <div class="grid grid-cols-1/min gap-x-8">
+          <div class="block">
+            <div class="text-graphite-light label-text uppercase mb-4">
+              {{ item.updated_at | date : 'dd/MM/yyyy' }}
+            </div>
+            <div class="text-graphite base-text-bold truncate mb-8">{{ item.title }}</div>
+            <div class="text-graphite-light mb-16">Previsão: 19/07/2023</div>
+
+            <icr-tag schema="gray">CEAG-IC</icr-tag>
+          </div>
+          <div class="flex flex-col justify-between items-center gap-y-16">
+            <icr-priority [kind]="'normal'" tooltipPosition="right" />
+            <icr-avatar [name]="'Ana Cardoso'" tooltipPosition="right" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

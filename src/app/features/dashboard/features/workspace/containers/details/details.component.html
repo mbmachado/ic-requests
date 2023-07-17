@@ -1,10 +1,10 @@
 <ng-container *ngrxLet="loading$ as loading">
-  <div *ngIf="loading" class="flex flex-col items-center justify-center h-full">
+  <div *ngIf="loading" class="md:flex flex-col hidden items-center justify-center h-full">
     <div class="text-center text-graphite-light mt-8">Carregando...</div>
   </div>
 
   <ng-container *ngrxLet="request$ as request">
-    <div *ngIf="!loading" class="grid grid-cols-1 grid-rows-min/1 h-full w-full p-16 gap-y-16 details-root">
+    <div *ngIf="!loading" class="md:grid grid-cols-1 grid-rows-min/1 hidden h-full w-full p-16 gap-y-16">
       <div class="grid grid-rows-1 grid-cols-{{ steps.length }} gap-x-8 h-40">
         <icr-step *ngFor="let step of steps" [stage]="step.stage" [status]="step.status" [text]="step.name" />
       </div>

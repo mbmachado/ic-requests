@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, map, withLatestFrom } from 'rxjs';
 
 import { RequestType } from '@core/models/enums/request-type.enum';
 import { CommentService } from '@core/services/data/comment.service';
@@ -13,10 +13,16 @@ import { StepStatus } from '@core/models/enums/step-status.enum';
 import { _Request } from '@core/models/request.model';
 import * as fromDashboardActions from '../../../../shared/state/dashboard/dashboard.actions';
 import * as fromDashboardSelectors from '../../../../shared/state/dashboard/dashboard.selectors';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Dialog, DialogRef } from '@angular/cdk/dialog';
+import { DetailsDialogComponent } from '../../components/details-dialog/details-dialog.component';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 interface CommentForm {
   comment: FormControl<string | null>;
 }
+
+@UntilDestroy()
 @Component({
   selector: 'icr-details',
   templateUrl: './details.component.html',
@@ -27,8 +33,8 @@ export class DetailsComponent implements OnInit {
   loading$?: Observable<boolean>;
 
   loadingComment = false;
-
   form: FormGroup<CommentForm>;
+  dialogRef?: DialogRef<unknown, DetailsDialogComponent>;
 
   private readonly inicialSteps = [
     {
@@ -65,7 +71,9 @@ export class DetailsComponent implements OnInit {
     private store: Store,
     private route: ActivatedRoute,
     private commentService: CommentService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private breakpointObserver: BreakpointObserver,
+    private dialog: Dialog
   ) {
     this.form = new FormGroup({
       comment: new FormControl('', [Validators.required]),
@@ -156,6 +164,27 @@ export class DetailsComponent implements OnInit {
       })
     );
     this.loading$ = this.store.select(fromDashboardSelectors.selectRequestLoading);
+
+    this.breakpointObserver
+      .observe(['(max-width: 768px)'])
+      .pipe(
+        map(result => result.matches),
+        withLatestFrom(this.request$),
+        untilDestroyed(this)
+      )
+      .subscribe(([mobile, request]) => {
+        if (mobile) {
+          this.dialogRef = this.dialog.open(DetailsDialogComponent, {
+            panelClass: 'fullscreen-dialog',
+            hasBackdrop: true,
+            data: request,
+          });
+        } else {
+          if (this.dialogRef) {
+            this.dialogRef.close();
+          }
+        }
+      });
   }
 
   addComment(requestId: number) {

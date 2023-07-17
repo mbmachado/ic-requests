@@ -72,6 +72,7 @@ $dark-theme: mat.define-dark-theme(
 @include mat.snack-bar-theme($light-theme);
 @include mat.divider-theme($light-theme);
 @include mat.tooltip-theme($light-theme);
+@include mat.tabs-theme($light-theme);
 @include mat.strong-focus-indicators-theme($light-theme);
 
 @include mat.snack-bar-color($light-theme);
@@ -92,6 +93,7 @@ $dark-theme: mat.define-dark-theme(
   @include mat.snack-bar-color($dark-theme);
   @include mat.divider-color($dark-theme);
   @include mat.tooltip-color($dark-theme);
+  @include mat.tabs-color($dark-theme);
   @include mat.strong-focus-indicators-color($dark-theme);
 }
 

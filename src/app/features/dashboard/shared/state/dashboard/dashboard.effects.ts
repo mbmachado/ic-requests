@@ -14,7 +14,7 @@ import * as fromDashboardActions from './dashboard.actions';
 export class DashboardEffects {
   loadRequests$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromDashboardActions.loadRequests),
+      ofType(fromDashboardActions.loadRequests, fromDashboardActions.loadMoreRequests),
       exhaustMap(() => {
         return this.requestService.getAll().pipe(
           map(requests => {

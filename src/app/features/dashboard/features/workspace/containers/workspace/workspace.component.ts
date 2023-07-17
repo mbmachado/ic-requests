@@ -40,8 +40,12 @@ export class WorkspaceComponent implements OnInit {
     });
 
     dialogRef.closed.subscribe(() => {
-      console.log('closed');
+      console.log('Modal Closed');
     });
+  }
+
+  onScroll(): void {
+    this.store.dispatch(fromDashboardActions.loadMoreRequests());
   }
 
   trackByFn(index: number, item: _Request) {

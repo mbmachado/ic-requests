@@ -1,0 +1,93 @@
+<div class="grid grid-rows-min/1 h-full">
+  <div class="flex items-center h-64 bg-white">
+    <div class="flex items-center justify-center w-64 h-full border-r border-gray">
+      <button mat-icon-button color="primary" aria-label="Voltar" (click)="onClose()">
+        <mat-icon svgIcon="angle-left" />
+      </button>
+    </div>
+
+    <div class="px-16">
+      <div class="inline-grid grid-rows-1 grid-cols-min/1 gap-16">
+        <div class="flex items-center text-blue h-full">
+          <mat-icon svgIcon="file"></mat-icon>
+        </div>
+        <div class="text-left">
+          <div class="base-text-bold text-blue uppercase">Detalhes Solicitação</div>
+          <div class="label text-graphite-light truncate">Acompanhamento de solitação</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block w-full h-full max-h-full border-t border-gray overflow-y-auto">
+    <div class="block bg-white w-full rounded-none sm:rounded mx-auto overflow-hidden">
+      <mat-tab-group>
+        <mat-tab label="Informações">
+          <div class="grid grid-rows-1 grid-cols-1/min bg-white rounded">
+            <div class="grid grid-rows-min/1 details-history">
+              <div class="p-16">
+                <div class="flex items-start justify-between mb-16">
+                  <div class="flex items-center gap-x-8">
+                    <div class="large-text">{{ request.title }}</div>
+
+                    <icr-tag schema="yellow">Em espera</icr-tag>
+                  </div>
+                  <icr-avatar name="Ana Cardoso" tooltipPosition="left" />
+                </div>
+
+                <div class="block">
+                  <label class="label-text text-graphite-light uppercase mb-4">Detalhes</label>
+                  <div>
+                    {{ request.details || 'Sem detalhes disponível' }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white">
+            <div class="p-16 border-t border-gray">
+              <div class="label-text text-graphite-light uppercase mb-8">Solicitado por</div>
+              <div class="grid grid-cols-min/1 gap-16 mb-16">
+                <icr-avatar />
+                <div>{{ request.user?.name }}</div>
+              </div>
+              <div class="grid grid-cols-2 gap-y-8">
+                <div class="col-span-2">
+                  <label class="label-text text-graphite-light uppercase mb-4">E-mail</label>
+                  <div>{{ request.user?.email }}</div>
+                </div>
+                <div class="col-span-2">
+                  <label class="label-text text-graphite-light uppercase mb-4">Celular</label>
+                  <div>{{ request.user?.cellphone || 'Não disponível' }}</div>
+                </div>
+                <div class="col-span-1">
+                  <label class="label-text text-graphite-light uppercase mb-4">Matricula</label>
+                  <div>{{ request.user?.enrollment_number }}</div>
+                </div>
+                <div class="col-span-1">
+                  <label class="label-text text-graphite-light uppercase mb-4">Curso</label>
+                  <div class="truncate">{{ request.user?.course | userCourse }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="p-16 border-t border-gray">
+              <div class="mb-8">
+                <label class="label-text text-graphite-light uppercase mb-4">Prioridade</label>
+                <div>Normal</div>
+              </div>
+              <div class="mb-8">
+                <label class="label-text text-graphite-light uppercase mb-4">Criado em</label>
+                <div>{{ request.created_at | date }}</div>
+              </div>
+              <div class="mb-8">
+                <label class="label-text text-graphite-light uppercase mb-4">Previsão</label>
+                <div>02/06/2023</div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Comentátios"> Nada para mostrar aqui. </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

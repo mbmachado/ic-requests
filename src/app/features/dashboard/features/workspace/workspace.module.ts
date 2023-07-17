@@ -18,13 +18,24 @@ import { PriorityComponent } from '../../../../shared/priority/priority.componen
 import { SearchComponent } from '../../../../shared/search/search.component';
 import { FilterDialogComponent } from './components/filter-dialog/filter-dialog.component';
 import { DialogModule } from '@angular/cdk/dialog';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { DetailsDialogComponent } from './components/details-dialog/details-dialog.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
-  declarations: [WorkspaceComponent, WelcomeComponent, DetailsComponent, CommentComponent, FilterDialogComponent],
+  declarations: [
+    WorkspaceComponent,
+    WelcomeComponent,
+    DetailsComponent,
+    CommentComponent,
+    FilterDialogComponent,
+    DetailsDialogComponent,
+  ],
   imports: [
     CommonModule,
     WorkspaceRoutingModule,
     ReactiveFormsModule,
+    InfiniteScrollModule,
     DialogModule,
     LetModule,
     ThemeModule,
@@ -34,6 +45,7 @@ import { DialogModule } from '@angular/cdk/dialog';
     StepComponent,
     SearchComponent,
     TagComponent,
+    MatTabsModule,
   ],
 })
 export class WorkspaceModule {}

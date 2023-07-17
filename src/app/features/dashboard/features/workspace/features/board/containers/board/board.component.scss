@@ -1,0 +1,27 @@
+.board-container {
+  @apply w-[280px] min-w-[280px];
+}
+
+.board-list {
+  @apply block overflow-hidden min-h-[200px];
+}
+
+.cdk-drag-preview {
+  @apply drop-shadow-xl cursor-move;
+}
+
+.cdk-drag-placeholder {
+  @apply border-dashed border-2 border-gray bg-gray-light drop-shadow-none;
+
+  & > * {
+    @apply opacity-0;
+  }
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.board-list.cdk-drop-list-dragging div:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
